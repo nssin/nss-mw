@@ -21,3 +21,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+// Exporting the exact appId string required by the Firestore queries in src/App.jsx
+// This resolves the [MISSING_EXPORT] error during the Vite production build.
+export const appId = import.meta.env.VITE_FIREBASE_PROJECT_ID || "nss-mw";
