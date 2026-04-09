@@ -1,53 +1,53 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import QuoteGenerator from './pages/QuoteGenerator';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import About from './pages/About';
-import Team from './pages/Team';
-import VisionMission from './pages/VisionMission';
-import Certifications from './pages/Certifications';
-import Safety from './pages/Safety';
-import Contact from './pages/Contact';
-import Careers from './pages/Careers';
-import Blog from './pages/Blog';
-import FAQ from './pages/FAQ';
-import Services from './pages/Services';
-import EOTCrane from './pages/EOTCrane';
-import SingleGirder from './pages/SingleGirder';
-import DoubleGirder from './pages/DoubleGirder';
-import JibCrane from './pages/JibCrane';
-import GantryCrane from './pages/GantryCrane';
-import CraneInstall from './pages/CraneInstall';
-import CraneMaintenance from './pages/CraneMaintenance';
-import AMC from './pages/AMC';
-import Modernization from './pages/Modernization';
-import Breakdown from './pages/Breakdown';
-import RoofProfile from './pages/RoofProfile';
-import IndustrialAuto from './pages/IndustrialAuto';
-import PLC from './pages/PLC';
-import ControlPanels from './pages/ControlPanels';
-import CustomEng from './pages/CustomEng';
-import RFQ from './pages/RFQ';
-import CostEstimator from './pages/CostEstimator';
-import Consult from './pages/Consult';
-import MyProjects from './pages/MyProjects';
-import Documents from './pages/Documents';
-import Invoices from './pages/Invoices';
-import ServiceRequests from './pages/ServiceRequests';
-import BookService from './pages/BookService';
-import Emergency from './pages/Emergency';
-import AMCTracking from './pages/AMCTracking';
-import ServiceHistory from './pages/ServiceHistory';
-import CaseStudies from './pages/CaseStudies';
-import Gallery from './pages/Gallery';
-import Testimonials from './pages/Testimonials';
-import Industries from './pages/Industries';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import Cookie from './pages/Cookie';
-import Sitemap from './pages/Sitemap';
+import Layout from './components/Layout.jsx';
+import Home from './pages/Home/index.jsx';
+import QuoteGenerator from './pages/QuoteGenerator/index.jsx';
+import Login from './pages/Login/index.jsx';
+import Dashboard from './pages/Dashboard/index.jsx';
+import About from './pages/About/index.jsx';
+import Team from './pages/Team/index.jsx';
+import VisionMission from './pages/VisionMission/index.jsx';
+import Certifications from './pages/Certifications/index.jsx';
+import Safety from './pages/Safety/index.jsx';
+import Contact from './pages/Contact/index.jsx';
+import Careers from './pages/Careers/index.jsx';
+import Blog from './pages/Blog/index.jsx';
+import FAQ from './pages/FAQ/index.jsx';
+import Services from './pages/Services/index.jsx';
+import EOTCrane from './pages/EOTCrane/index.jsx';
+import SingleGirder from './pages/SingleGirder/index.jsx';
+import DoubleGirder from './pages/DoubleGirder/index.jsx';
+import JibCrane from './pages/JibCrane/index.jsx';
+import GantryCrane from './pages/GantryCrane/index.jsx';
+import CraneInstall from './pages/CraneInstall/index.jsx';
+import CraneMaintenance from './pages/CraneMaintenance/index.jsx';
+import AMC from './pages/AMC/index.jsx';
+import Modernization from './pages/Modernization/index.jsx';
+import Breakdown from './pages/Breakdown/index.jsx';
+import RoofProfile from './pages/RoofProfile/index.jsx';
+import IndustrialAuto from './pages/IndustrialAuto/index.jsx';
+import PLC from './pages/PLC/index.jsx';
+import ControlPanels from './pages/ControlPanels/index.jsx';
+import CustomEng from './pages/CustomEng/index.jsx';
+import RFQ from './pages/RFQ/index.jsx';
+import CostEstimator from './pages/CostEstimator/index.jsx';
+import Consult from './pages/Consult/index.jsx';
+import MyProjects from './pages/MyProjects/index.jsx';
+import Documents from './pages/Documents/index.jsx';
+import Invoices from './pages/Invoices/index.jsx';
+import ServiceRequests from './pages/ServiceRequests/index.jsx';
+import BookService from './pages/BookService/index.jsx';
+import Emergency from './pages/Emergency/index.jsx';
+import AMCTracking from './pages/AMCTracking/index.jsx';
+import ServiceHistory from './pages/ServiceHistory/index.jsx';
+import CaseStudies from './pages/CaseStudies/index.jsx';
+import Gallery from './pages/Gallery/index.jsx';
+import Testimonials from './pages/Testimonials/index.jsx';
+import Industries from './pages/Industries/index.jsx';
+import Privacy from './pages/Privacy/index.jsx';
+import Terms from './pages/Terms/index.jsx';
+import Cookie from './pages/Cookie/index.jsx';
+import Sitemap from './pages/Sitemap/index.jsx';
 
 export default function App() {
   return (
@@ -102,7 +102,6 @@ export default function App() {
           <Route path="terms" element={<Terms />} />
           <Route path="cookie" element={<Cookie />} />
           <Route path="sitemap" element={<Sitemap />} />
-
         </Route>
       </Routes>
     </BrowserRouter>
