@@ -1,11 +1,26 @@
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Settings, Shield, Zap, HardHat, Factory, Wrench, BarChart, CheckCircle } from 'lucide-react';
+import { 
+  Search, 
+  PlayCircle, 
+  ArrowRight, 
+  Globe, 
+  HardHat, 
+  Activity, 
+  ChevronRight,
+  Hammer,
+  Cpu,
+  CheckCircle,
+  Factory,
+  Settings,
+  Wrench,
+  Shield,
+  Zap
+} from 'lucide-react';
 import { motion } from 'framer-motion';
+import { cn } from '../../lib/utils';
 
 export default function Home() {
-  const { t } = useTranslation();
-
   // Animation Variants
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
@@ -21,168 +36,204 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full overflow-hidden bg-gray-50 dark:bg-dark transition-colors duration-300">
+    <div className="flex flex-col w-full animate-in fade-in duration-700 bg-white font-sans overflow-x-hidden">
       
-      {/* 1. HERO SECTION */}
-      <section className="relative bg-primary dark:bg-gray-900 text-white pt-24 pb-32 px-4 overflow-hidden">
-        {/* Background Grid Pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNykiLz48L3N2Zz4=')] opacity-50 z-0"></div>
-        
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
+      {/* 1. HERO SECTION: MAP BACKGROUND STYLE */}
+      <section className="relative h-[85vh] w-full bg-[#244356] flex flex-col items-center justify-center px-6 overflow-hidden">
+        {/* Faux Map Background / Abstract Geo-Grid */}
+        <div className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#1a2b3c_100%)]"></div>
+          <div className="w-full h-full scale-150 transform -rotate-12 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+        </div>
+
+        <div className="relative z-10 w-full max-w-5xl text-center space-y-10">
           <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-            <span className="inline-block py-1 px-3 rounded-full bg-blue-800/50 dark:bg-gray-800 border border-blue-400/30 text-blue-200 text-sm font-semibold mb-6 tracking-wide uppercase">
-              ISO 9001:2015 Certified Manufacturing
+            <span className="inline-block py-1 px-4 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-8">
+              ISO 9001:2015 Certified Operations
             </span>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
-              Industrial Crane & <br className="hidden md:block" />
-              <span className="text-secondary">Automation Systems</span>
+            <h1 className="text-5xl lg:text-7xl font-bold text-white tracking-tighter leading-[1.05] mb-10">
+              Let's find smarter ways <br/> forward, together.
             </h1>
-            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-blue-100 font-light">
-              Designing, manufacturing, and modernizing heavy-duty EOT cranes and advanced PLC control panels for India's leading industrial sectors.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <Link to="/quote" className="w-full sm:w-auto bg-secondary text-gray-900 px-8 py-4 rounded-lg font-bold hover:bg-yellow-500 hover:scale-105 transition-all flex items-center justify-center shadow-lg shadow-yellow-600/20">
-                Configure Your Crane <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-              <Link to="/services" className="w-full sm:w-auto bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 hover:border-white transition-all flex items-center justify-center">
-                Explore Engineering Services
-              </Link>
+            
+            {/* Large Center Search Bar */}
+            <div className="w-full max-w-2xl mx-auto bg-white shadow-2xl rounded-sm flex items-center p-1 group transition-all focus-within:ring-4 focus-within:ring-blue-500/20">
+               <div className="flex-1 flex items-center px-6 border-r border-gray-100">
+                  <Search className="text-gray-300 mr-4" size={20} />
+                  <input 
+                    type="text" 
+                    placeholder="Search for an engineering node..." 
+                    className="w-full py-5 text-lg outline-none text-black placeholder-gray-400"
+                  />
+               </div>
+               <button className="hidden md:block px-8 py-5 text-gray-400 font-medium hover:text-black">
+                 Near me
+               </button>
+            </div>
+
+            <div className="mt-10 flex items-center justify-center gap-4 text-white/70">
+              <PlayCircle size={28} className="text-white fill-white/20" />
+              <p className="text-sm font-medium tracking-wide">NSS-MW provides real-time telemetry data across all operation hubs.</p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* 2. REAL CORPORATE METRICS */}
-      <section className="relative z-20 -mt-16 px-4 max-w-7xl mx-auto">
-        <motion.div 
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-        >
-          <motion.div variants={fadeUp}>
-            <div className="text-4xl font-black text-primary dark:text-secondary mb-2">15+</div>
-            <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Years Experience</div>
+      {/* 2. ENGINEERING HIGHLIGHT: WHITE SECTION */}
+      <section className="bg-white py-32 px-6 lg:px-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-start mb-32">
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="space-y-8"
+          >
+            <h2 className="text-6xl font-bold text-black tracking-tighter leading-none">NSS-MW <br/> Engineering</h2>
+            <p className="text-gray-600 text-xl leading-relaxed max-w-md font-medium">
+              We deliver end-to-end industrial solutions manufactured in Nashik, redefining heavy lifting and automation since 2005.
+            </p>
           </motion.div>
-          <motion.div variants={fadeUp}>
-            <div className="text-4xl font-black text-primary dark:text-secondary mb-2">500+</div>
-            <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Installations</div>
+          
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="space-y-8 text-gray-500 text-base leading-loose"
+          >
+            <p>Operations are the backdrop of our workflow — they are complicated, ever-changing nodes. As NSS-MW has powered the movement of heavy assets from A to B, we’ve uncovered unique insights about how and why industrial projects scale safely.</p>
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link to="/quote" className="bg-black text-white px-8 py-4 font-bold rounded-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 shadow-xl shadow-black/10">
+                Configure Your Crane <ArrowRight size={18} />
+              </Link>
+              <Link to="/services" className="border-2 border-black/10 text-black px-8 py-4 font-bold rounded-sm hover:bg-gray-50 transition-colors">
+                Explore Services
+              </Link>
+            </div>
           </motion.div>
-          <motion.div variants={fadeUp}>
-            <div className="text-4xl font-black text-primary dark:text-secondary mb-2">50+</div>
-            <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Expert Engineers</div>
-          </motion.div>
-          <motion.div variants={fadeUp}>
-            <div className="text-4xl font-black text-primary dark:text-secondary mb-2">24/7</div>
-            <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Breakdown Support</div>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* 3. CORE SERVICES HIGHLIGHT */}
-      <section className="py-24 px-4 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">Engineered for Heavy Duty</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            From robust Single Girder Cranes to complex PLC automation panels, we deliver end-to-end industrial solutions manufactured in Nashik.
-          </p>
         </div>
 
+        {/* 3. CORE SERVICE NODES: 3-COLUMN ILLUSTRATED CARDS */}
         <motion.div 
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16"
         >
-          {/* Service 1 */}
-          <motion.div variants={fadeUp} className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-2xl border border-gray-100 dark:border-gray-700 transition-all duration-300 relative overflow-hidden">
-            <div className="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-primary dark:text-secondary mb-6 group-hover:scale-110 transition-transform">
-              <Factory className="w-8 h-8" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">EOT Cranes</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
-              Heavy-duty Single and Double Girder Overhead Travelling Cranes with capacities up to 100 Tons and spans up to 30 meters.
-            </p>
-            <Link to="/services/eot-crane" className="inline-flex items-center text-primary dark:text-secondary font-bold hover:underline">
-              View Specifications <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
-
-          {/* Service 2 */}
-          <motion.div variants={fadeUp} className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-2xl border border-gray-100 dark:border-gray-700 transition-all duration-300 relative overflow-hidden">
-            <div className="w-14 h-14 bg-yellow-50 dark:bg-yellow-900/30 rounded-xl flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform">
-              <Settings className="w-8 h-8" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Industrial Automation</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
-              Custom PLC programming (Siemens, Allen-Bradley) and VFD integration for precise control and energy-efficient operations.
-            </p>
-            <Link to="/industrialauto" className="inline-flex items-center text-primary dark:text-secondary font-bold hover:underline">
-              View Automation Solutions <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
-
-          {/* Service 3 */}
-          <motion.div variants={fadeUp} className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-2xl border border-gray-100 dark:border-gray-700 transition-all duration-300 relative overflow-hidden">
-            <div className="w-14 h-14 bg-green-50 dark:bg-green-900/30 rounded-xl flex items-center justify-center text-green-600 dark:text-green-400 mb-6 group-hover:scale-110 transition-transform">
-              <Wrench className="w-8 h-8" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">AMC & Modernization</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
-              Comprehensive Annual Maintenance Contracts and legacy crane upgrades to meet the latest safety standards and improve efficiency.
-            </p>
-            <Link to="/services/amc" className="inline-flex items-center text-primary dark:text-secondary font-bold hover:underline">
-              Explore AMC Packages <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
+          {[
+            { title: "EOT Crane Systems", color: "bg-[#274D39]", desc: "Heavy-duty Single and Double Girder systems with capacities up to 100 Tons.", icon: <Hammer size={40} className="text-white"/>, path: "/services/eot-crane" },
+            { title: "Industrial Automation", color: "bg-[#F59E0B]", desc: "Custom PLC programming (Siemens, AB) and VFD integration for precise control.", icon: <Cpu size={40} className="text-white"/>, path: "/industrialauto" },
+            { title: "AMC & Modernization", color: "bg-[#1E40AF]", desc: "Comprehensive contracts and legacy upgrades to meet modern safety standards.", icon: <Activity size={40} className="text-white"/>, path: "/services/amc" }
+          ].map((item, i) => (
+            <motion.div key={i} variants={fadeUp} className="group space-y-10">
+              <div className={cn("aspect-square w-full rounded-sm flex items-center justify-center transition-all duration-500 group-hover:scale-[0.98] shadow-lg", item.color)}>
+                 {item.icon}
+              </div>
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold text-black tracking-tight">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                <Link to={item.path} className="inline-flex items-center gap-2 text-black font-bold border-b-2 border-black pb-1 hover:text-blue-600 hover:border-blue-600 transition-all text-xs uppercase tracking-widest">
+                  View Node Specs <ArrowRight size={14} />
+                </Link>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </section>
 
-      {/* 4. WHY CHOOSE NAIDU SOLUTIONS (Trust Factors) */}
-      <section className="bg-gray-100 dark:bg-gray-900 py-24 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-            className="w-full lg:w-1/2 space-y-6"
-          >
-            <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white">Strict Safety Protocols & Unmatched Reliability</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
-              At Naidu Solutions & Services, we do not compromise on structural integrity. Every unit is load-tested and certified before handover, ensuring zero downtime for your production line.
-            </p>
-            <ul className="space-y-4 pt-4">
-              <li className="flex items-start">
-                <CheckCircle className="w-6 h-6 text-green-500 mr-3 flex-shrink-0" />
-                <span className="text-gray-800 dark:text-gray-300 font-medium">IS 3177 / IS 807 compliant design and fabrication.</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="w-6 h-6 text-green-500 mr-3 flex-shrink-0" />
-                <span className="text-gray-800 dark:text-gray-300 font-medium">Genuine branded electricals (Schneider, L&T, Siemens).</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="w-6 h-6 text-green-500 mr-3 flex-shrink-0" />
-                <span className="text-gray-800 dark:text-gray-300 font-medium">Rapid Response Team mobilized within 4 hours for breakdowns.</span>
-              </li>
-            </ul>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
-            className="w-full lg:w-1/2 bg-primary rounded-2xl p-10 text-white shadow-2xl relative overflow-hidden"
-          >
-             <div className="absolute -right-10 -top-10 opacity-10">
-               <Shield className="w-64 h-64" />
-             </div>
-             <h3 className="text-3xl font-bold mb-4 relative z-10">Need an immediate structural assessment?</h3>
-             <p className="mb-8 text-blue-100 relative z-10 text-lg">Our engineering team provides free on-site consultation and load calculations to recommend the exact crane specifications for your facility.</p>
-             <Link to="/consult" className="inline-flex items-center bg-white text-primary px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition-colors relative z-10 shadow-lg">
-                Book Free Consultation <HardHat className="ml-2 w-5 h-5" />
-             </Link>
-          </motion.div>
+      {/* 4. STAY CONNECTED: DARK UI DATA SECTION */}
+      <section className="bg-[#121212] py-32 px-6 lg:px-24 text-white">
+        <div className="max-w-7xl mx-auto space-y-16">
+           <motion.div 
+             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+             className="flex flex-col md:flex-row justify-between items-end gap-8 border-b border-white/10 pb-16"
+           >
+              <div className="space-y-4">
+                <h2 className="text-5xl font-bold tracking-tight">Stay Connected</h2>
+                <p className="text-white/40 max-w-md font-medium text-lg leading-relaxed">Monitor system-wide agility, structural node health, and deployment status.</p>
+              </div>
+              <Link to="/consult" className="bg-white text-black px-10 py-4 font-bold text-xs uppercase tracking-[0.2em] rounded-sm hover:bg-gray-200 transition-colors shadow-2xl">
+                Register New Node
+              </Link>
+           </motion.div>
+
+           <motion.div 
+             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+             className="overflow-x-auto"
+           >
+             <table className="w-full text-left">
+               <thead>
+                 <tr className="text-[10px] uppercase tracking-[0.3em] text-white/30 border-b border-white/10">
+                   <th className="py-6 font-bold">Event Operator Node</th>
+                   <th className="py-6 font-bold">Deployment Hub</th>
+                   <th className="py-6 font-bold">Node Status</th>
+                   <th className="py-6 font-bold text-right">View Log</th>
+                 </tr>
+               </thead>
+               <tbody className="text-sm text-white/70">
+                 {[
+                   { node: "Node_742-MH", hub: "Mumbai Central", status: "ACTIVE" },
+                   { node: "Node_109-GJ", hub: "Ahmedabad Hub", status: "STANDBY" },
+                   { node: "Node_882-KA", hub: "Bangalore Node", status: "ACTIVE" },
+                   { node: "Node_431-MH", hub: "Pune Facility", status: "MAINTENANCE" }
+                 ].map((row, i) => (
+                   <motion.tr key={i} variants={fadeUp} className="border-b border-white/5 hover:bg-white/5 transition-colors group cursor-pointer">
+                     <td className="py-8 font-bold text-white tracking-tight text-lg">{row.node}</td>
+                     <td className="py-8 text-white/50">{row.hub}</td>
+                     <td className="py-8">
+                       <span className={cn(
+                         "px-3 py-1 rounded-full text-[10px] font-bold tracking-widest",
+                         row.status === 'ACTIVE' ? 'bg-green-500/10 text-green-400' : 'bg-white/5 text-white/30'
+                       )}>{row.status}</span>
+                     </td>
+                     <td className="py-8 text-right">
+                       <button className="text-white/20 group-hover:text-white transition-all transform group-hover:translate-x-1 inline-flex items-center gap-3 font-bold text-xs uppercase tracking-widest">
+                         Register View <ChevronRight size={16} />
+                       </button>
+                     </td>
+                   </motion.tr>
+                 ))}
+               </tbody>
+             </table>
+           </motion.div>
         </div>
       </section>
 
+      {/* 5. TRUST & SAFETY SECTION */}
+      <section className="bg-gray-50 py-32 px-6 lg:px-24">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-24">
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="w-full lg:w-1/2 space-y-10"
+          >
+            <h2 className="text-5xl font-bold text-black tracking-tighter leading-tight">Unmatched Reliability. <br/> Certified Safety.</h2>
+            <p className="text-gray-500 text-lg leading-relaxed font-medium">
+              At NSS-MW, we do not compromise on structural integrity. Every unit is load-tested and certified before handover, ensuring zero downtime for your production line.
+            </p>
+            <div className="space-y-6">
+              {[
+                "IS 3177 / IS 807 compliant design and fabrication.",
+                "Genuine branded electricals (Schneider, L&T, Siemens).",
+                "Rapid Response Team mobilized within 4 hours for breakdowns."
+              ].map((text, idx) => (
+                <div key={idx} className="flex items-center gap-4 text-black font-bold">
+                  <CheckCircle size={24} className="text-green-600 shrink-0" />
+                  <span className="tracking-tight">{text}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
+            className="w-full lg:w-1/2 bg-[#1e40af] rounded-sm p-16 text-white shadow-2xl relative overflow-hidden"
+          >
+            <div className="absolute -right-20 -top-20 opacity-10">
+              <Shield size={300} strokeWidth={1} />
+            </div>
+            <h3 className="text-4xl font-bold mb-6 relative z-10 tracking-tight leading-tight">Need an immediate structural assessment?</h3>
+            <p className="mb-12 text-blue-100/70 relative z-10 text-lg font-medium leading-relaxed">Our engineering team provides free on-site consultation and load calculations to recommend the exact specifications for your hub.</p>
+            <Link to="/consult" className="inline-flex items-center bg-white text-black px-10 py-5 font-bold hover:bg-gray-100 transition-all relative z-10 shadow-xl text-xs uppercase tracking-widest">
+              Book Consultation <HardHat className="ml-3 w-5 h-5" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

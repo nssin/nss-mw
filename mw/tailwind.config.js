@@ -8,37 +8,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Unified Theme Colors for the New Map-Centric UI */
-        primary: '#000000',       /* Absolute black for Header/Footer */
-        secondary: '#244356',     /* Deep Map Blue for Hero Section */
-        dark: '#0D0D0D',          /* Lidar/Kepler.gl Dark Dashboard Base */
+        /* Core Industrial Palette strictly based on design specs */
+        primary: '#c1ff72',       /* Industrial Lime Accent */
+        secondary: '#ffffff',      /* Pure White Text/Highlights */
+        dark: '#2d2d2d',          /* Global Background Base */
         
-        /* Accented Interface Colors */
-        'map-blue': '#1A2B3C',    /* Contrast map tile blue */
-        'accent-green': '#274D39', /* Featured card green */
-        'accent-yellow': '#F59E0B',/* Warning/Highlight yellow */
-        'accent-blue': '#1E40AF',  /* Informational blue */
-        'neon-blue': '#3b82f6',    /* Telemetry stream blue */
-        'uber-light': '#FFFFFF',   /* Pure white for content sections */
-        'uber-black': '#000000',
+        /* Modular Block Colors */
+        'industrial-black': '#1a1a1a', /* Navigation and Footer blocks */
+        'industrial-gray': '#3d3d3d',  /* Section contrast blocks */
+        'industrial-lime': '#c1ff72',  /* Action-oriented accent */
       },
       fontFamily: {
-        /* Geometric 'Outfit' font family for a sleek, modern tech look */
+        /* Geometric 'Outfit' font for a modern manufacturing aesthetic */
         sans: ['Outfit', 'system-ui', 'sans-serif'],
       },
       animation: {
-        /* Fluid entrance animations for scrolling pages */
-        'fade-in': 'fade-in 0.7s ease-out forwards',
-        'zoom-in': 'zoom-in 0.5s ease-out forwards',
+        /* Smooth block-level entrance animations for scrolling sections */
+        'fade-in': 'fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'slide-up': 'slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
       keyframes: {
         'fade-in': {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
-        'zoom-in': {
-          '0%': { transform: 'scale(0.95)', opacity: '0' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
+        'slide-up': {
+          '0%': { transform: 'translateY(30px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
         }
       }
     },

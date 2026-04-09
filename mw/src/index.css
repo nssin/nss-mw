@@ -1,56 +1,78 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 /* Tailwind v4 Migration:
   Defining theme variables within the @theme block
   allows @apply to recognize custom colors and utilities.
 */
 @theme {
-  /* Updated core palette based on Lidar/Map design specs */
-  --color-primary: #000000;      /* Absolute black for Top Nav/Footers */
-  --color-secondary: #244356;    /* Deep map blue for Hero background */
-  --color-dark: #0D0D0D;         /* Lidar dashboard background */
+  /* Industrial Color Palette (#2d2d2d Base) */
+  --color-primary: #c1ff72;       /* Industrial Lime Accent */
+  --color-secondary: #ffffff;      /* Contrast White */
+  --color-dark: #2d2d2d;          /* Main Background */
   
-  /* Specific UI Accent Colors extracted from reference images */
-  --color-map-blue: #1A2B3C;
-  --color-accent-green: #274D39;
-  --color-accent-yellow: #F59E0B;
-  --color-accent-blue: #1E40AF;
-  --color-neon-blue: #3b82f6;
-  --color-uber-light: #FFFFFF;
-
-  /* Geometric typography mapping */
+  /* Block-specific shades */
+  --color-industrial-black: #1a1a1a;
+  --color-industrial-gray: #3d3d3d;
+  --color-industrial-lime: #c1ff72;
+  
+  /* Geometric font mapping */
   --font-sans: 'Outfit', system-ui, sans-serif;
+
+  /* Spacing and Rounding overrides for block-based UI */
+  --radius-sm: 0px;               /* Strictly Sharp Blocks */
+  --radius-md: 2px;
 }
 
 @layer base {
-  /* IMPORTANT: Removed 'overflow-hidden' from body to allow 
-    the new public pages to scroll naturally. 
-  */
+  /* Set the global #2d2d2d background and white text strictly */
   body {
-    @apply bg-white text-black font-sans transition-colors duration-300 min-h-screen overflow-x-hidden;
+    @apply bg-dark text-white font-sans transition-colors duration-300 min-h-screen overflow-x-hidden antialiased;
   }
 
-  /* Resetting potential height constraints from previous dashboard layout */
+  /* Reset for Natural Vertical Scrolling for all 44+ pages */
   #root {
-    @apply min-h-screen flex flex-col;
+    @apply min-h-screen flex flex-col w-full;
+  }
+
+  /* Typography for Industrial Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tighter font-extrabold;
+  }
+
+  /* Link transitions */
+  a {
+    @apply transition-all duration-200;
   }
 }
 
-/* UI Enhancement: Custom Scrollbar for Floating Glass Panels and Navigation */
+/* UI Enhancement: Minimalist Industrial Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  @apply bg-industrial-black;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-white/20 rounded-full hover:bg-white/40;
+  @apply bg-industrial-lime/50 hover:bg-industrial-lime transition-colors;
 }
 
-/* Glassmorphism utility for Dashboard Panels */
+/* Glassmorphism for Lidar Dashboard (Themed to #2d2d2d) */
 .glass-panel {
-  @apply bg-[#1E1E1E]/90 backdrop-blur-xl border border-white/10 shadow-2xl;
+  @apply bg-industrial-black/80 backdrop-blur-2xl border border-white/5 shadow-2xl;
+}
+
+/* Industrial Utility Classes for Block Sections */
+.section-divider {
+  @apply border-b border-white/10;
+}
+
+.industrial-button-primary {
+  @apply bg-industrial-lime text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-all;
+}
+
+.industrial-button-outline {
+  @apply border-2 border-white/20 text-white px-8 py-4 font-bold uppercase tracking-widest hover:border-white hover:bg-white/5 transition-all;
 }
