@@ -54,51 +54,66 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
+          {/* Main Entry Points */}
           <Route index element={<Home />} />
           <Route path="quote" element={<QuoteGenerator />} />
           <Route path="login" element={<Login />} />
           <Route path="dashboard" element={<Dashboard />} />
+          
+          {/* Corporate & Identity */}
           <Route path="about" element={<About />} />
           <Route path="team" element={<Team />} />
           <Route path="visionmission" element={<VisionMission />} />
           <Route path="certifications" element={<Certifications />} />
           <Route path="safety" element={<Safety />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="industries" element={<Industries />} />
+          <Route path="testimonials" element={<Testimonials />} />
           <Route path="careers" element={<Careers />} />
           <Route path="blog" element={<Blog />} />
           <Route path="faq" element={<FAQ />} />
+          <Route path="contact" element={<Contact />} />
+
+          {/* Engineering Service Categories */}
           <Route path="services" element={<Services />} />
           <Route path="services/eot-crane" element={<EOTCrane />} />
           <Route path="services/single-girder" element={<SingleGirder />} />
           <Route path="services/double-girder" element={<DoubleGirder />} />
           <Route path="services/jib-crane" element={<JibCrane />} />
           <Route path="services/gantry-crane" element={<GantryCrane />} />
+          
+          {/* Operations & Execution */}
           <Route path="craneinstall" element={<CraneInstall />} />
-          <Route path="cranemaintenance" element={<CraneMaintenance />} />
-          <Route path="services/amc" element={<AMC />} />
-          <Route path="modernization" element={<Modernization />} />
-          <Route path="breakdown" element={<Breakdown />} />
+          <Route path="customeng" element={<CustomEng />} />
           <Route path="roofprofile" element={<RoofProfile />} />
           <Route path="industrialauto" element={<IndustrialAuto />} />
           <Route path="plc" element={<PLC />} />
           <Route path="controlpanels" element={<ControlPanels />} />
-          <Route path="customeng" element={<CustomEng />} />
+
+          {/* Maintenance & Support */}
+          <Route path="cranemaintenance" element={<CraneMaintenance />} />
+          <Route path="services/amc" element={<AMC />} />
+          <Route path="amctracking" element={<AMCTracking />} />
+          <Route path="servicehistory" element={<ServiceHistory />} />
+          <Route path="modernization" element={<Modernization />} />
+          <Route path="breakdown" element={<Breakdown />} />
+          <Route path="emergency" element={<Emergency />} />
+          <Route path="book-service" element={<BookService />} />
+          <Route path="service-requests" element={<ServiceRequests />} />
+
+          {/* Procurement & Client Tools */}
           <Route path="rfq" element={<RFQ />} />
           <Route path="costestimator" element={<CostEstimator />} />
           <Route path="consult" element={<Consult />} />
-          <Route path="myprojects" element={<MyProjects />} />
+          <Route path="my-projects" element={<MyProjects />} />
           <Route path="documents" element={<Documents />} />
           <Route path="invoices" element={<Invoices />} />
-          <Route path="servicerequests" element={<ServiceRequests />} />
-          <Route path="bookservice" element={<BookService />} />
-          <Route path="emergency" element={<Emergency />} />
-          <Route path="amctracking" element={<AMCTracking />} />
-          <Route path="servicehistory" element={<ServiceHistory />} />
-          <Route path="casestudies" element={<CaseStudies />} />
+          
+          {/* Case Studies & Gallery */}
+          <Route path="case-studies" element={<CaseStudies />} />
           <Route path="gallery" element={<Gallery />} />
-          <Route path="testimonials" element={<Testimonials />} />
-          <Route path="industries" element={<Industries />} />
-          <Route path="privacy" element={<Privacy />} />
+
+          {/* Legal & Navigation */}
+          <Route path="privacy-policy" element={<Privacy />} />
           <Route path="terms" element={<Terms />} />
           <Route path="cookie" element={<Cookie />} />
           <Route path="sitemap" element={<Sitemap />} />
