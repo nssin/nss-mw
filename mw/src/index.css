@@ -39,4 +39,3 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   @apply bg-slate-700/50 rounded-full hover:bg-slate-600;
 }
-```
