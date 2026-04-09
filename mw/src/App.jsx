@@ -21,7 +21,7 @@ import {
   HardHat, Phone, Briefcase, BookOpen, HelpCircle, Hammer, Settings, Wrench, 
   Truck, Zap, Activity, Cpu, FileText, ClipboardList, Calculator, MessageSquare, 
   FolderLock, CreditCard, Clock, History, FileSearch, Image, Star, Factory, 
-  Lock, FileWarning, Cookie, Map as MapIcon, Menu, X, ChevronRight, Search, Bell, Mail
+  Lock, FileWarning, Cookie as CookieIcon, Map as MapIcon, Menu, X, ChevronRight, Search, Bell, Mail
 } from 'lucide-react';
 import { auth, db, appId } from './firebase';
 import { cn } from './lib/utils';
