@@ -36,7 +36,7 @@ export default {
 postcss_config = """
 export default {
   plugins: {
-    tailwindcss: {},
+    '@tailwindcss/postcss': {},
     autoprefixer: {},
   },
 }
@@ -586,18 +586,18 @@ create_file("src/main.jsx", main_jsx)
 # 2. Components
 create_file("src/components/Layout.jsx", layout_component)
 
-# 3. Complex Pages
-create_file("src/pages/Home.jsx", home_page)
-create_file("src/pages/QuoteGenerator.jsx", quote_page)
-create_file("src/pages/Login.jsx", login_page)
-create_file("src/pages/Dashboard.jsx", dashboard_page)
+# 3. Complex Pages (Updated to folder/index.jsx structure)
+create_file("src/pages/Home/index.jsx", home_page)
+create_file("src/pages/QuoteGenerator/index.jsx", quote_page)
+create_file("src/pages/Login/index.jsx", login_page)
+create_file("src/pages/Dashboard/index.jsx", dashboard_page)
 
-# 4. Massive Page Generation Loop (Generates the remaining 44 files instantly)
+# 4. Massive Page Generation Loop (Generates the remaining 44 files instantly into folders)
 for name, title in standard_pages.items():
-    create_file(f"src/pages/{name}.jsx", generate_standard_page(name, title))
+    create_file(f"src/pages/{name}/index.jsx", generate_standard_page(name, title))
 
 # 5. Master Router Generation
 create_file("src/App.jsx", generate_app_jsx())
 
 print("✅ Success! All 48 React files, routes, and logic have been strictly generated.")
-print("Run 'npm run dev' in your terminal to start the massive platform.")
+print("Run 'npm run dev' or 'npm run build' in your terminal to start the massive platform.")
