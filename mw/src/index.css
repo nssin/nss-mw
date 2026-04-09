@@ -1,9 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Tailwind v4 Migration:
+Defining theme variables within the @theme block
+allows @apply to recognize custom colors and utilities.
+*/
+@theme {
+--color-primary: #1E40AF;
+--color-secondary: #F59E0B;
+--color-dark: #0F172A;
+}
 
 @layer base {
-  body {
-    @apply bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-300;
-  }
+body {
+/* bg-gray-50 is a standard utility, but defining the theme ensures discovery */
+@apply bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-300;
+}
+}
+
+/* UI Enhancement: Custom Scrollbar for the 44+ Route Navigation */
+.custom-scrollbar::-webkit-scrollbar {
+width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+@apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+@apply bg-slate-700/50 rounded-full hover:bg-slate-600;
 }
