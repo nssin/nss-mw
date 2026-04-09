@@ -6,30 +6,40 @@
   allows @apply to recognize custom colors and utilities.
 */
 @theme {
-  /* Retained core variables mapped to the new UI palette to prevent breaking existing classes */
-  --color-primary: #1A1A1A; /* Dark charcoal */
-  --color-secondary: #274D39; /* Dark green */
-  --color-dark: #121212;
+  /* Updated core palette based on Lidar/Map design specs */
+  --color-primary: #000000;      /* Absolute black for Top Nav/Footers */
+  --color-secondary: #244356;    /* Deep map blue for Hero background */
+  --color-dark: #0D0D0D;         /* Lidar dashboard background */
   
-  /* Specific UI Theme Colors based on reference design */
-  --color-uber-green: #274D39;
-  --color-uber-black: #1A1A1A;
-  --color-uber-light: #F6F6F6;
+  /* Specific UI Accent Colors extracted from reference images */
+  --color-map-blue: #1A2B3C;
+  --color-accent-green: #274D39;
+  --color-accent-yellow: #F59E0B;
+  --color-accent-blue: #1E40AF;
+  --color-neon-blue: #3b82f6;
+  --color-uber-light: #FFFFFF;
 
-  /* Set geometric font as the default sans */
+  /* Geometric typography mapping */
   --font-sans: 'Outfit', system-ui, sans-serif;
 }
 
 @layer base {
+  /* IMPORTANT: Removed 'overflow-hidden' from body to allow 
+    the new public pages to scroll naturally. 
+  */
   body {
-    /* bg-[#F6F6F6] maps to the soft off-white background of the left panel */
-    @apply bg-uber-light text-uber-black font-sans transition-colors duration-300;
+    @apply bg-white text-black font-sans transition-colors duration-300 min-h-screen overflow-x-hidden;
+  }
+
+  /* Resetting potential height constraints from previous dashboard layout */
+  #root {
+    @apply min-h-screen flex flex-col;
   }
 }
 
-/* UI Enhancement: Custom Scrollbar for the 44+ Route Navigation */
+/* UI Enhancement: Custom Scrollbar for Floating Glass Panels and Navigation */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -37,5 +47,10 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-slate-700/50 rounded-full hover:bg-slate-600;
+  @apply bg-white/20 rounded-full hover:bg-white/40;
+}
+
+/* Glassmorphism utility for Dashboard Panels */
+.glass-panel {
+  @apply bg-[#1E1E1E]/90 backdrop-blur-xl border border-white/10 shadow-2xl;
 }

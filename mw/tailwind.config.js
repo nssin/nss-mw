@@ -8,19 +8,38 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Re-mapped core colors for backward compatibility */
-        primary: '#1A1A1A',
-        secondary: '#274D39',
-        dark: '#121212',
+        /* Unified Theme Colors for the New Map-Centric UI */
+        primary: '#000000',       /* Absolute black for Header/Footer */
+        secondary: '#244356',     /* Deep Map Blue for Hero Section */
+        dark: '#0D0D0D',          /* Lidar/Kepler.gl Dark Dashboard Base */
         
-        /* New UI specific colors extracted from the reference image */
-        'uber-green': '#274D39',
-        'uber-black': '#1A1A1A',
-        'uber-light': '#F6F6F6',
+        /* Accented Interface Colors */
+        'map-blue': '#1A2B3C',    /* Contrast map tile blue */
+        'accent-green': '#274D39', /* Featured card green */
+        'accent-yellow': '#F59E0B',/* Warning/Highlight yellow */
+        'accent-blue': '#1E40AF',  /* Informational blue */
+        'neon-blue': '#3b82f6',    /* Telemetry stream blue */
+        'uber-light': '#FFFFFF',   /* Pure white for content sections */
+        'uber-black': '#000000',
       },
       fontFamily: {
-        /* Geometric font matching the reference design */
+        /* Geometric 'Outfit' font family for a sleek, modern tech look */
         sans: ['Outfit', 'system-ui', 'sans-serif'],
+      },
+      animation: {
+        /* Fluid entrance animations for scrolling pages */
+        'fade-in': 'fade-in 0.7s ease-out forwards',
+        'zoom-in': 'zoom-in 0.5s ease-out forwards',
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'zoom-in': {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        }
       }
     },
   },
