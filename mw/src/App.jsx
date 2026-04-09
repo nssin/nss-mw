@@ -22,30 +22,14 @@ import {
   Truck, Zap, Activity, Cpu, FileText, ClipboardList, Calculator, MessageSquare, 
   FolderLock, CreditCard, Clock, History, FileSearch, Image, Star, Factory, 
   Lock, FileWarning, Cookie as CookieIcon, Map as MapIcon, Menu, X, ChevronRight, Search, Bell, Mail,
-  MapPin, Navigation, ArrowRight, CircleDot, Square
+  MapPin, Navigation, ArrowRight, CircleDot, Square, User, Globe, Play, PlayCircle, Maximize2, MousePointer2, Filter, Layers, Sliders
 } from 'lucide-react';
 import { auth, db, appId } from './firebase';
 import { cn } from './lib/utils';
 
 // --- SHARED COMPONENTS & LAYOUT ---
 
-const SidebarLink = ({ to, icon: Icon, label, active, collapsed }) => (
-  <Link
-    to={to}
-    className={cn(
-      "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group",
-      active 
-        ? "bg-uber-black text-white shadow-lg shadow-black/10" 
-        : "text-slate-400 hover:bg-slate-800 hover:text-white"
-    )}
-  >
-    <Icon size={20} className={cn(active ? "text-white" : "group-hover:text-white")} />
-    {!collapsed && <span className="text-sm font-medium truncate">{label}</span>}
-  </Link>
-);
-
 const Layout = () => {
-  const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,241 +39,199 @@ const Layout = () => {
     return () => unsubscribe();
   }, []);
 
-  const navigationGroups = [
-    {
-      title: "Core",
-      links: [
-        { to: "/dashboard", icon: LayoutDashboard, label: "Command Center" },
-        { to: "/quote", icon: Quote, label: "Quote Generator" },
-      ]
-    },
-    {
-      title: "Services",
-      links: [
-        { to: "/services/eot-crane", icon: Hammer, label: "EOT Cranes" },
-        { to: "/services/amc", icon: Clock, label: "AMC Tracking" },
-        { to: "/craneinstall", icon: Wrench, label: "Installation" },
-      ]
-    },
-    {
-      title: "Management",
-      links: [
-        { to: "/my-projects", icon: FolderLock, label: "My Projects" },
-        { to: "/invoices", icon: CreditCard, label: "Invoices" },
-        { to: "/service-requests", icon: MessageSquare, label: "Requests" },
-      ]
-    }
-  ];
-
   return (
-    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden font-sans">
-      {/* Sidebar Navigation Tree */}
-      <aside className={cn(
-        "bg-[#121212] text-white transition-all duration-300 flex flex-col border-r border-slate-800",
-        collapsed ? "w-20" : "w-72"
-      )}>
-        <div className="p-6 flex items-center gap-4 border-b border-slate-800">
-          <div className="w-10 h-10 bg-uber-black rounded-xl flex items-center justify-center shadow-lg border border-slate-700">
-            <Zap size={24} className="text-white" />
-          </div>
-          {!collapsed && <span className="font-black text-xl tracking-tighter">NSS-MW</span>}
+    <div className="min-h-screen bg-white font-sans flex flex-col">
+      {/* Sleek Sticky Top Navigation (Uber Movement Style) */}
+      <header className="sticky top-0 z-[100] bg-black text-white h-16 flex items-center justify-between px-6 lg:px-12 border-b border-white/10">
+        <div className="flex items-center gap-10">
+          <Link to="/" className="text-xl font-bold tracking-tighter flex items-center gap-2">
+            <Zap size={20} className="text-white" />
+            NSS-MW
+          </Link>
+          <nav className="hidden md:flex items-center gap-8 text-[13px] font-medium text-white/70">
+            <Link to="/services" className="hover:text-white transition-colors">Products</Link>
+            <Link to="/dashboard" className="hover:text-white transition-colors">Cities</Link>
+            <Link to="/case-studies" className="hover:text-white transition-colors">Case Studies</Link>
+          </nav>
         </div>
 
-        <nav className="flex-1 overflow-y-auto p-4 space-y-8 custom-scrollbar">
-          {navigationGroups.map((group, idx) => (
-            <div key={idx}>
-              {!collapsed && <p className="text-[10px] font-bold text-slate-500 mb-4 px-4 tracking-[0.2em] uppercase">{group.title}</p>}
-              <div className="space-y-1">
-                {group.links.map((link) => (
-                  <SidebarLink 
-                    key={link.to} 
-                    {...link} 
-                    active={location.pathname === link.to} 
-                    collapsed={collapsed} 
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </nav>
-
-        <div className="p-4 border-t border-slate-800">
+        <div className="flex items-center gap-6">
           {user ? (
-            <button 
-              onClick={() => signOut(auth).then(() => navigate('/login'))}
-              className="w-full flex items-center gap-4 p-3 text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
-            >
-              <X size={20} />
-              {!collapsed && <span className="text-sm font-bold">TERMINATE</span>}
-            </button>
+            <div className="flex items-center gap-4">
+               <button onClick={() => signOut(auth)} className="text-[13px] hover:text-red-400 transition-colors">Sign Out</button>
+               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                 <User size={16} />
+               </div>
+            </div>
           ) : (
-            <Link to="/login" className="w-full flex items-center gap-4 p-3 text-white hover:bg-white/10 rounded-xl transition-all">
-              <LogIn size={20} />
-              {!collapsed && <span className="text-sm font-bold">LOGIN</span>}
+            <Link to="/login" className="text-[13px] font-medium hover:text-white/70 transition-colors flex items-center gap-2">
+              <User size={16} />
+              Sign In
             </Link>
           )}
         </div>
-      </aside>
+      </header>
 
-      {/* Main Content Viewport */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-8 shadow-sm">
-          <button onClick={() => setCollapsed(!collapsed)} className="p-2 hover:bg-gray-100 rounded-lg">
-            <Menu size={20} />
-          </button>
-          <div className="flex items-center gap-6">
-            <div className="relative hidden md:block">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-              <input type="text" placeholder="Search files, projects..." className="pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-full text-sm outline-none w-64" />
-            </div>
-            <Bell size={20} className="text-gray-400 cursor-pointer" />
-            {user && (
-              <div className="flex items-center gap-3 border-l pl-6 border-gray-100">
-                <div className="text-right">
-                  <p className="text-xs font-bold text-uber-black">{user.email}</p>
-                  <p className="text-[10px] text-gray-400 uppercase tracking-tighter">Verified Client</p>
-                </div>
-                <div className="w-8 h-8 rounded-lg bg-uber-black text-white flex items-center justify-center font-bold">
-                  {user.email[0].toUpperCase()}
-                </div>
-              </div>
-            )}
-          </div>
-        </header>
-
-        <div className="flex-1 overflow-y-auto p-8 animate-in fade-in duration-500 bg-uber-light">
-          <Outlet />
-        </div>
+      {/* Main Content Area - Natural Scrolling */}
+      <main className="flex-1">
+        <Outlet />
       </main>
+
+      {/* Shared Global Footer */}
+      <footer className="bg-black text-white py-16 px-6 lg:px-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-12">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold tracking-tighter">NSS-MW</h3>
+            <p className="text-white/50 text-sm">Let's find smarter ways forward, together.</p>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-widest text-white/40">Products</h4>
+            <ul className="space-y-2 text-sm text-white/70">
+              <li>EOT Cranes</li>
+              <li>Automation</li>
+              <li>Installation</li>
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-widest text-white/40">Company</h4>
+            <ul className="space-y-2 text-sm text-white/70">
+              <li>About Us</li>
+              <li>Safety</li>
+              <li>Careers</li>
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-widest text-white/40">Legal</h4>
+            <ul className="space-y-2 text-sm text-white/70">
+              <li>Privacy</li>
+              <li>Terms</li>
+              <li>Cookie Policy</li>
+            </ul>
+          </div>
+        </div>
+        <p className="mt-8 text-xs text-white/30 text-center">© 2026 NSS-MW Heavy Engineering. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
 
-// --- REDESIGNED PUBLIC LANDING PAGE (SPLIT SCREEN) ---
+// --- REDESIGNED PUBLIC MAIN PAGE (SCROLLING MAP UI) ---
 
 const Home = () => {
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen w-full bg-uber-light font-sans">
-      {/* Left Panel: Light UI */}
-      <div className="w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-between relative">
-        <header className="mb-16">
-          <h1 className="text-2xl font-semibold tracking-tight text-uber-black">NSS-MW</h1>
-        </header>
+    <div className="flex flex-col w-full animate-in fade-in duration-700">
+      {/* Hero Section: Map Background Style */}
+      <section className="relative h-[85vh] w-full bg-[#244356] flex flex-col items-center justify-center px-6 overflow-hidden">
+        {/* Faux Map Background / Abstract Geo-Grid */}
+        <div className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#1a2b3c_100%)]"></div>
+          <div className="w-full h-full scale-150 transform -rotate-12 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+        </div>
 
-        <main className="flex-1 flex flex-col justify-center max-w-lg">
-          <h2 className="text-5xl lg:text-[4rem] font-bold text-uber-black leading-[1.1] mb-2 tracking-tight">
-            Go Anywhere
-          </h2>
-          <h2 className="text-5xl lg:text-[4rem] font-medium text-gray-500 leading-[1.1] mb-10 tracking-tight">
-            With NSS-MW
+        <div className="relative z-10 w-full max-w-4xl text-center space-y-8">
+          <h2 className="text-4xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
+            Let's find smarter ways <br/> forward, together.
           </h2>
           
-          <p className="text-uber-black font-medium mb-8">
-            Request heavy engineering, track transport, and go.
-          </p>
+          {/* Large Center Search Bar */}
+          <div className="w-full max-w-2xl mx-auto bg-white shadow-2xl rounded-sm flex items-center p-1 group transition-all focus-within:ring-4 focus-within:ring-blue-500/20">
+             <div className="flex-1 flex items-center px-6 border-r border-gray-100">
+                <Search className="text-gray-300 mr-4" size={20} />
+                <input 
+                  type="text" 
+                  placeholder="Search for a project node..." 
+                  className="w-full py-5 text-lg outline-none text-black placeholder-gray-400"
+                />
+             </div>
+             <button className="hidden md:block px-8 py-5 text-gray-400 font-medium hover:text-black">
+               Near me
+             </button>
+          </div>
 
-          <div className="space-y-4 relative">
-            {/* Visual connecting line for input fields */}
-            <div className="absolute left-[23px] top-[26px] bottom-[26px] w-[2px] bg-gray-200 z-0 hidden sm:block"></div>
-            
-            <div className="relative z-10 flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 focus-within:border-uber-black focus-within:ring-1 focus-within:ring-uber-black transition-all">
-              <div className="pl-5 pr-3 py-4 bg-white">
-                <CircleDot size={18} className="text-uber-black" />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Enter Site Location" 
-                className="flex-1 py-4 px-2 outline-none text-uber-black font-medium placeholder-gray-500"
-              />
-              <button className="pr-5 pl-2 py-4 bg-white hover:bg-gray-50 transition-colors">
-                <Navigation size={18} className="text-uber-black transform rotate-45" />
-              </button>
-            </div>
+          <div className="flex items-center justify-center gap-4 text-white/80">
+            <PlayCircle size={28} className="text-white fill-white/20" />
+            <p className="text-sm font-medium tracking-wide">NSS-MW provides real-time telemetry data across all operation hubs.</p>
+          </div>
+        </div>
+      </section>
 
-            <div className="relative z-10 flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 focus-within:border-uber-black focus-within:ring-1 focus-within:ring-uber-black transition-all">
-              <div className="pl-5 pr-3 py-4 bg-white">
-                <Square size={16} className="text-uber-black fill-uber-black" />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Enter Destination Facility" 
-                className="flex-1 py-4 px-2 outline-none text-uber-black font-medium placeholder-gray-500"
-              />
-            </div>
-            
-            <Link to="/quote" className="block w-full mt-6 bg-uber-black hover:bg-black text-white text-center py-4 rounded-xl font-medium transition-colors flex items-center justify-center gap-2 group">
-              See Estimates 
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+      {/* Feature Grid: White Section */}
+      <section className="bg-white py-24 px-6 lg:px-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
+          <div className="space-y-8">
+            <h2 className="text-6xl font-bold text-black tracking-tighter leading-none">NSS-MW <br/> Engineering</h2>
+            <p className="text-gray-600 text-lg leading-relaxed max-w-md">
+              Engineering provides data, tools and insights about operational safety so we can more deeply understand and address today’s industrial mobility challenges.
+            </p>
+          </div>
+          <div className="space-y-6 text-gray-500 text-sm leading-loose">
+            <p>Operations are the backdrop of our workflow — they are complicated, ever-changing nodes. As NSS-MW has powered the movement of heavy assets from A to B, we’ve uncovered unique insights about how and why projects scale.</p>
+            <Link to="/about" className="inline-flex items-center gap-2 text-black font-bold border-b-2 border-black pb-1 hover:text-blue-600 hover:border-blue-600 transition-all">
+              Stay in the loop <ArrowRight size={16} />
             </Link>
-          </div>
-        </main>
-        
-        <footer className="mt-16 text-sm text-gray-500">
-          <p>© 2026 NSS-MW Heavy Engineering.</p>
-        </footer>
-      </div>
-
-      {/* Right Panel: Dark Green UI */}
-      <div className="w-full lg:w-1/2 bg-uber-green relative overflow-hidden flex flex-col p-8 lg:p-12 lg:rounded-l-[2.5rem] lg:my-4 lg:mr-4 shadow-2xl shadow-black/20">
-        
-        {/* Top Navigation */}
-        <nav className="flex items-center justify-between z-20 relative">
-          <div className="flex gap-6 lg:gap-8 text-white/90 text-sm font-medium">
-            <Link to="/services" className="hover:text-white transition-colors">Transport</Link>
-            <Link to="/craneinstall" className="hover:text-white transition-colors">Install</Link>
-            <Link to="/about" className="hover:text-white transition-colors hidden sm:block">Business</Link>
-            <Link to="/contact" className="hover:text-white transition-colors hidden sm:block">Contact</Link>
-          </div>
-          <div className="flex items-center gap-6">
-            <button className="text-white/90 text-sm font-medium hover:text-white transition-colors hidden sm:block">EN</button>
-            <Link to="/login" className="bg-white text-uber-black px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-gray-100 transition-colors">
-              Sign Up
-            </Link>
-          </div>
-        </nav>
-
-        {/* Central Illustration Area */}
-        <div className="flex-1 flex items-center justify-center relative z-10 my-12 min-h-[300px]">
-          {/* Abstract background graphics mimicking the smoke/clouds */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-64 h-64 bg-[#3d6852] rounded-full blur-3xl absolute top-10 right-10 mix-blend-screen opacity-60"></div>
-            <div className="w-80 h-80 bg-[#1e3b2c] rounded-full blur-3xl absolute bottom-0 left-0 mix-blend-multiply opacity-80"></div>
-            <div className="w-72 h-72 bg-[#4a7d62] rounded-full blur-3xl absolute -top-10 -left-10 mix-blend-screen opacity-40"></div>
-          </div>
-          
-          {/* Main Visual Element */}
-          <div className="relative z-20 transform hover:scale-105 transition-transform duration-700">
-            <Truck size={180} strokeWidth={1} className="text-[#a8c9b9] drop-shadow-2xl" />
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-32 h-4 bg-black/40 blur-md rounded-full"></div>
           </div>
         </div>
 
-        {/* Bottom QR Card */}
-        <div className="bg-white rounded-2xl p-6 flex items-center justify-between z-20 relative shadow-xl mt-auto">
-          <div className="flex items-center gap-6">
-            {/* Faux QR Code Pattern */}
-            <div className="w-20 h-20 bg-white border border-gray-100 rounded-lg p-1.5 grid grid-cols-5 grid-rows-5 gap-0.5 shadow-sm">
-              {[...Array(25)].map((_, i) => (
-                <div key={i} className={cn("bg-uber-black rounded-[1px]", Math.random() > 0.4 ? "opacity-100" : "opacity-0")}></div>
-              ))}
-              {/* Center NSS Logo in Faux QR */}
-              <div className="absolute top-1/2 left-[30px] -translate-y-1/2 bg-white px-1 font-black text-[8px] tracking-tighter text-uber-black">NSS</div>
+        {/* 3-Column Illustrated Cards */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+          {[
+            { title: "Open and Interoperable", color: "bg-[#274D39]", desc: "Free, downloadable data aligned with open standards for easy integration.", icon: <Globe size={40} className="text-white"/> },
+            { title: "Extensive Global Network", color: "bg-[#F59E0B]", desc: "Leverage historical logs from 700+ sites based on actual observations.", icon: <HardHat size={40} className="text-white"/> },
+            { title: "Insights at a Glance", color: "bg-[#1E40AF]", desc: "Tools built to address city transportation challenges, from planning to research.", icon: <Activity size={40} className="text-white"/> }
+          ].map((item, i) => (
+            <div key={i} className="group space-y-8">
+              <div className={cn("aspect-square w-full rounded-sm flex items-center justify-center transition-transform group-hover:scale-[0.98]", item.color)}>
+                 {item.icon}
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold text-black">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-bold text-uber-black tracking-tight mb-1">Download the NSS-MW app</h3>
-              <p className="text-gray-500 text-sm">Scan to track operations</p>
-            </div>
-          </div>
-          <button className="w-12 h-12 flex items-center justify-center hover:bg-gray-50 rounded-full transition-colors group">
-            <ArrowRight size={24} className="text-uber-black group-hover:translate-x-1 transition-transform" />
-          </button>
+          ))}
         </div>
-      </div>
+      </section>
+
+      {/* Data Section: Dark UI Mimicry */}
+      <section className="bg-[#121212] py-24 px-6 lg:px-24 text-white">
+        <div className="max-w-7xl mx-auto space-y-12">
+           <div className="flex flex-col md:flex-row justify-between items-end gap-8 border-b border-white/10 pb-12">
+              <div>
+                <h2 className="text-4xl font-bold tracking-tight">Stay Connected</h2>
+                <p className="text-white/40 mt-2">Monitor system-wide agility and node health.</p>
+              </div>
+              <button className="bg-white text-black px-8 py-3 font-bold text-sm rounded-sm hover:bg-gray-200">Register Node</button>
+           </div>
+
+           <div className="overflow-x-auto">
+             <table className="w-full text-left">
+               <thead>
+                 <tr className="text-[10px] uppercase tracking-[0.2em] text-white/30 border-b border-white/10">
+                   <th className="py-4">Event Operator Name</th>
+                   <th className="py-4">Deployment Date</th>
+                   <th className="py-4">View Berth</th>
+                 </tr>
+               </thead>
+               <tbody className="text-sm text-white/70">
+                 {[1,2,3,4].map(i => (
+                   <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                     <td className="py-6 font-medium text-white">Project Node_{i*244} - Mumbai Hub</td>
+                     <td className="py-6">April {i+5}, 2026</td>
+                     <td className="py-6">
+                       <button className="text-white/40 group-hover:text-white font-bold flex items-center gap-2">Register View <ChevronRight size={14} /></button>
+                     </td>
+                   </tr>
+                 ))}
+               </tbody>
+             </table>
+           </div>
+        </div>
+      </section>
     </div>
   );
 };
 
-// --- OTHER COMPONENTS ---
+// --- DASHBOARD REDESIGN (LIDAR / GLASS UI PANELS) ---
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -312,124 +254,112 @@ const Dashboard = () => {
   if (!user) return <Navigate to="/login" />;
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-end">
-        <div>
-          <h2 className="text-3xl font-black tracking-tight text-uber-black">Operator Dashboard</h2>
-          <p className="text-gray-500">Live monitoring of your crane assets and service tickets.</p>
+    <div className="h-[calc(100vh-64px)] w-full bg-[#0d0d0d] relative overflow-hidden flex animate-in zoom-in-95 duration-500">
+      {/* Background Point Cloud Visualization Mimicry */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(#ffffff_1px,_transparent_1px)] [background-size:24px_24px]"></div>
+         <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent"></div>
+      </div>
+
+      {/* Floating Glass Panels - Streetscape.gl Style */}
+      <div className="absolute left-6 top-6 w-80 bg-[#1e1e1e]/90 backdrop-blur-xl border border-white/10 rounded-sm shadow-2xl p-6 z-20">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+           <h2 className="text-sm font-bold tracking-widest text-white/60 uppercase flex items-center gap-2">
+             <Activity size={14} className="text-blue-500" /> Metrics
+           </h2>
+           <Maximize2 size={14} className="text-white/30" />
         </div>
-        <div className="bg-white px-4 py-2 rounded-xl border flex items-center gap-2 shadow-sm">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Real-time Linked</span>
+        
+        <div className="space-y-8">
+           <div>
+              <p className="text-[10px] text-white/30 uppercase tracking-widest mb-3">Load Acceleration</p>
+              <div className="h-24 w-full bg-black/40 rounded-sm relative overflow-hidden border border-white/5">
+                {/* Visual Sine Wave Mimic */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-full h-px bg-white/10"></div>
+                  <div className="absolute w-full h-full opacity-50 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]"></div>
+                  <div className="absolute inset-0 flex items-end">
+                    <div className="w-full h-1/2 bg-blue-500/10 blur-xl"></div>
+                  </div>
+                </div>
+                <p className="absolute top-2 right-2 text-xs font-mono text-blue-400">1.2 g</p>
+              </div>
+           </div>
+
+           <div>
+              <p className="text-[10px] text-white/30 uppercase tracking-widest mb-3">Operational Stream</p>
+              <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                {data.map(m => (
+                  <div key={m.id} className="flex items-center justify-between text-[11px] py-2 border-b border-white/5">
+                    <span className="text-white/60 truncate max-w-[120px]">{m.title || 'Sys_Check'}</span>
+                    <span className="text-green-400 font-mono">ACTIVE</span>
+                  </div>
+                ))}
+              </div>
+           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {[
-          { label: 'Active Cranes', val: '12', color: 'blue' },
-          { label: 'Pending AMC', val: '02', color: 'amber' },
-          { label: 'Service History', val: '148', color: 'green' },
-          { label: 'Open Invoices', val: '$4,200', color: 'purple' }
-        ].map((s, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{s.label}</p>
-            <p className="text-3xl font-black text-uber-black">{s.val}</p>
-          </div>
+      {/* Right Side Control Bar */}
+      <div className="absolute right-6 top-6 flex flex-col gap-2 z-20">
+        {[Maximize2, MousePointer2, Filter, Layers, Sliders].map((Icon, idx) => (
+          <button key={idx} className="w-10 h-10 bg-[#1e1e1e] hover:bg-[#2e2e2e] text-white/40 hover:text-white flex items-center justify-center border border-white/10 rounded-sm shadow-xl transition-all">
+            <Icon size={18} />
+          </button>
         ))}
       </div>
 
-      <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
-        <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-uber-black"><Activity size={20} /> Live Operational Stream</h3>
-        <div className="space-y-4">
-          {data.length > 0 ? data.map(m => (
-            <div key={m.id} className="flex items-center justify-between p-4 bg-uber-light rounded-xl">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                  <Cpu size={18} className="text-uber-black" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-uber-black">{m.title || 'System Check'}</p>
-                  <p className="text-[10px] text-gray-500 font-mono uppercase">NodeID: {m.id.substring(0,8)}</p>
-                </div>
-              </div>
-              <span className="text-xs font-bold text-green-700 bg-green-100 px-3 py-1 rounded-full">ACTIVE</span>
-            </div>
-          )) : (
-            <div className="py-20 text-center text-gray-400">
-              <Search className="mx-auto mb-4 opacity-20" size={48} />
-              <p>Awaiting data from Firestore cloud...</p>
-            </div>
-          )}
+      {/* Bottom Timeline Control Bar */}
+      <div className="absolute bottom-6 left-6 right-6 bg-[#1e1e1e]/95 border border-white/10 rounded-sm p-4 z-20 flex items-center gap-6">
+        <Play size={18} className="text-white fill-white" />
+        <div className="flex-1 space-y-2">
+           <div className="flex justify-between text-[10px] font-mono text-white/40">
+             <span>Mon, 26 Sep 2026 13:04:38 GMT</span>
+             <span>00:14</span>
+           </div>
+           <div className="h-1 bg-white/10 rounded-full relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1/3 bg-blue-500"></div>
+           </div>
         </div>
+      </div>
+
+      {/* Central Interactive Wireframe Car/Truck Mimicry */}
+      <div className="flex-1 flex items-center justify-center pt-20">
+         <div className="relative">
+            <Truck size={400} strokeWidth={0.5} className="text-white/5 opacity-50" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-96 h-48 bg-blue-500/10 rounded-full blur-[100px] animate-pulse"></div>
+            </div>
+         </div>
       </div>
     </div>
   );
 };
 
-const Login = () => {
-  const [mode, setMode] = useState('login');
-  const navigate = useNavigate();
+// --- AUTH COMPONENTS ---
 
+const Login = () => {
+  const navigate = useNavigate();
   const handleAuth = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
     try {
-      if (mode === 'login') {
-        await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        const u = await createUserWithEmailAndPassword(auth, email, password);
-        await sendEmailVerification(u.user);
-        await emailjs.send(
-          import.meta.env.VITE_EMAILJS_SERVICE_ID,
-          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-          { to_email: email, app_name: "NSS-MW" },
-          import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-        );
-      }
+      await signInWithEmailAndPassword(auth, e.target.email.value, e.target.password.value);
       navigate('/dashboard');
-    } catch (err) {
-      alert(err.message);
-    }
+    } catch (err) { alert(err.message); }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-uber-light font-sans">
-      <div className="w-full max-w-md bg-white p-10 rounded-[2.5rem] shadow-xl border border-gray-100">
-        <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-uber-black rounded-2xl flex items-center justify-center text-white mx-auto mb-6 shadow-xl shadow-black/20">
-            <ShieldCheck size={32} />
-          </div>
-          <h2 className="text-3xl font-bold text-uber-black tracking-tight">System Access</h2>
-          <p className="text-gray-500 mt-2 text-sm">Authorize to access engineering nodes.</p>
+    <div className="min-h-[80vh] flex items-center justify-center bg-white px-6">
+      <div className="w-full max-w-sm space-y-12">
+        <div className="space-y-4">
+          <h2 className="text-4xl font-bold tracking-tight text-black">Sign In</h2>
+          <p className="text-gray-500">Access the NSS-MW secure data nodes.</p>
         </div>
-
         <form onSubmit={handleAuth} className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-500 uppercase ml-2">Operator Email</label>
-            <div className="relative">
-              <Mail className="absolute left-4 top-4 text-gray-400" size={18} />
-              <input name="email" type="email" required className="w-full pl-12 pr-4 py-4 bg-uber-light border border-gray-200 rounded-2xl focus:border-uber-black focus:ring-1 focus:ring-uber-black outline-none transition-all font-medium text-uber-black" />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-500 uppercase ml-2">Access Key</label>
-            <div className="relative">
-              <Lock className="absolute left-4 top-4 text-gray-400" size={18} />
-              <input name="password" type="password" required className="w-full pl-12 pr-4 py-4 bg-uber-light border border-gray-200 rounded-2xl focus:border-uber-black focus:ring-1 focus:ring-uber-black outline-none transition-all font-medium text-uber-black" />
-            </div>
-          </div>
-          <button type="submit" className="w-full py-4 bg-uber-black text-white rounded-2xl font-medium shadow-lg hover:bg-black transition-colors mt-6 flex items-center justify-center gap-2 group">
-            {mode === 'login' ? 'Authorize Console' : 'Register Operator'}
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-          <button 
-            type="button" 
-            onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
-            className="w-full py-2 text-sm text-gray-500 font-medium hover:text-uber-black transition-colors"
-          >
-            {mode === 'login' ? "Don't have access? Create Account" : "Back to Authorization"}
+          <input name="email" type="email" placeholder="Operator Email" className="w-full bg-[#f6f6f6] p-4 text-black outline-none border-b-2 border-transparent focus:border-black transition-all" />
+          <input name="password" type="password" placeholder="Access Key" className="w-full bg-[#f6f6f6] p-4 text-black outline-none border-b-2 border-transparent focus:border-black transition-all" />
+          <button type="submit" className="w-full bg-black text-white py-4 font-bold flex items-center justify-center gap-2 hover:bg-gray-900">
+            Continue <ArrowRight size={18} />
           </button>
         </form>
       </div>
@@ -438,51 +368,51 @@ const Login = () => {
 };
 
 // Placeholder components for all 44 routes (to be populated with real specific logic)
-const QuoteGenerator = () => <div className="p-8 bg-white rounded-3xl border shadow-sm"> <h2 className="text-2xl font-bold mb-6 text-uber-black">Quote Estimator</h2> <p className="text-gray-500">Calculate EOT crane costs based on span and capacity.</p> </div>;
-const About = () => <div className="max-w-3xl"> <h2 className="text-4xl font-bold mb-6 text-uber-black tracking-tight">Our Legacy</h2> <p className="text-gray-600 leading-loose">NSS-MW is a leader in heavy engineering, specializing in overhead cranes and material handling solutions since 2005.</p> </div>;
-const Team = () => <div className="grid grid-cols-1 md:grid-cols-4 gap-8"> {[1,2,3,4].map(i => <div key={i} className="aspect-square bg-gray-200 rounded-2xl"></div>)} </div>;
-const VisionMission = () => <div className="space-y-10"> <div className="p-10 bg-uber-light rounded-3xl border border-gray-200"> <h3 className="text-2xl font-bold text-uber-black mb-4">Vision</h3> <p className="text-gray-600">To redefine industrial safety through autonomous crane technologies.</p> </div> </div>;
-const Certifications = () => <div className="flex gap-10"> <div className="w-32 h-44 border-4 border-gray-200 rounded-xl flex items-center justify-center text-gray-400 font-bold">ISO 9001</div> </div>;
-const Safety = () => <div className="p-10 bg-red-50 text-red-800 rounded-3xl"> <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><HardHat /> Zero Accident Policy</h3> <p>Safety is not an option; it is our foundation.</p> </div>;
-const Contact = () => <div className="grid grid-cols-1 md:grid-cols-2 gap-10"> <div className="space-y-6"> <h2 className="text-3xl font-bold text-uber-black">Get In Touch</h2> <div className="flex items-center gap-4 text-gray-600"><Phone /> +91 98765 43210</div> </div> </div>;
-const Careers = () => <div className="space-y-4"> <div className="p-6 bg-white border border-gray-200 rounded-2xl flex justify-between items-center shadow-sm"> <div> <h4 className="font-bold text-uber-black">Lead Structural Engineer</h4> <p className="text-xs text-gray-500 mt-1">Pune, India // Full Time</p> </div> <button className="text-uber-black font-bold text-sm bg-uber-light px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">Apply Now</button> </div> </div>;
-const Blog = () => <div className="grid grid-cols-2 gap-10"> <div className="h-64 bg-gray-200 rounded-3xl"></div> </div>;
-const FAQ = () => <div className="space-y-4 max-w-2xl"> <details className="p-5 bg-white border border-gray-200 rounded-2xl shadow-sm"><summary className="font-bold cursor-pointer text-uber-black outline-none">What is the maintenance cycle for EOT cranes?</summary><p className="mt-4 text-gray-600 leading-relaxed">Quarterly inspections are recommended for heavy usage.</p></details> </div>;
-const Services = () => <div className="grid grid-cols-2 md:grid-cols-4 gap-6"> {[1,2,3,4].map(i => <div key={i} className="p-8 bg-white border border-gray-200 rounded-3xl h-48 shadow-sm hover:shadow-md transition-shadow cursor-pointer"></div>)} </div>;
-const EOTCrane = () => <div> <h2 className="text-3xl font-bold text-uber-black">EOT Cranes</h2> </div>;
-const SingleGirder = () => <div className="text-uber-black font-medium">Single Girder EOT Cranes</div>;
-const DoubleGirder = () => <div className="text-uber-black font-medium">Double Girder EOT Cranes</div>;
-const JibCrane = () => <div className="text-uber-black font-medium">Jib Cranes</div>;
-const GantryCrane = () => <div className="text-uber-black font-medium">Gantry Cranes</div>;
-const CraneInstall = () => <div className="text-uber-black font-medium">Installation Services</div>;
-const CraneMaintenance = () => <div className="text-uber-black font-medium">Maintenance Solutions</div>;
-const AMC = () => <div className="text-uber-black font-medium">AMC Plans</div>;
-const Modernization = () => <div className="text-uber-black font-medium">Modernization & Refurbishment</div>;
-const Breakdown = () => <div className="text-uber-black font-medium">Breakdown Support</div>;
-const RoofProfile = () => <div className="text-uber-black font-medium">Roofing & Shed Profiles</div>;
-const IndustrialAuto = () => <div className="text-uber-black font-medium">Industrial Automation</div>;
-const PLC = () => <div className="text-uber-black font-medium">PLC Programming & Logic</div>;
-const ControlPanels = () => <div className="text-uber-black font-medium">Electrical Control Panels</div>;
-const CustomEng = () => <div className="text-uber-black font-medium">Custom Engineering Solutions</div>;
-const RFQ = () => <div className="text-uber-black font-medium">Request For Quotation</div>;
-const CostEstimator = () => <div className="text-uber-black font-medium">Cost Estimator Tool</div>;
-const Consult = () => <div className="text-uber-black font-medium">Engineering Consultation</div>;
-const MyProjects = () => <div className="text-uber-black font-medium">My Active Projects</div>;
-const Documents = () => <div className="text-uber-black font-medium">Technical Documents</div>;
-const Invoices = () => <div className="text-uber-black font-medium">Financial Invoices</div>;
-const ServiceRequests = () => <div className="text-uber-black font-medium">Service Support Tickets</div>;
-const BookService = () => <div className="text-uber-black font-medium">Book a Technician</div>;
-const Emergency = () => <div className="bg-red-600 p-20 text-white rounded-[3rem] text-center shadow-xl shadow-red-600/20"><h1 className="text-5xl font-black mb-6 tracking-tighter">EMERGENCY RESPONSE</h1><p className="font-medium text-lg">Call +91 999 999 9999 for immediate breakdown assistance.</p></div>;
-const AMCTracking = () => <div className="text-uber-black font-medium">Track your AMC Status</div>;
-const ServiceHistory = () => <div className="text-uber-black font-medium">Service Logs & Reports</div>;
-const CaseStudies = () => <div className="text-uber-black font-medium">Project Case Studies</div>;
-const Gallery = () => <div className="text-uber-black font-medium">Image & Video Gallery</div>;
-const Testimonials = () => <div className="text-uber-black font-medium">Client Success Stories</div>;
-const Industries = () => <div className="text-uber-black font-medium">Industries We Serve</div>;
-const Privacy = () => <div className="text-uber-black font-medium">Privacy Policy</div>;
-const Terms = () => <div className="text-uber-black font-medium">Terms & Conditions</div>;
-const Cookie = () => <div className="text-uber-black font-medium">Cookie Policy</div>;
-const Sitemap = () => <div className="text-uber-black font-medium">Visual Sitemap</div>;
+const QuoteGenerator = () => <div className="p-24 bg-white"> <h2 className="text-6xl font-bold tracking-tighter mb-12">Quote Generator</h2> <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-gray-500 leading-loose"> <p>Calculate EOT crane costs based on operational span and load capacity using the industry's most advanced logistics model.</p> </div> </div>;
+const About = () => <div className="p-24 bg-white"> <h2 className="text-6xl font-bold tracking-tighter mb-12">Our Legacy</h2> <p className="text-gray-600 leading-loose max-w-3xl">NSS-MW is a leader in heavy engineering, specializing in overhead cranes and material handling solutions since 2005.</p> </div>;
+const Team = () => <div className="p-24 grid grid-cols-1 md:grid-cols-4 gap-8"> {[1,2,3,4].map(i => <div key={i} className="aspect-square bg-gray-100 rounded-sm"></div>)} </div>;
+const VisionMission = () => <div className="p-24 space-y-10"> <div className="p-10 bg-gray-50 rounded-sm"> <h3 className="text-2xl font-bold text-black mb-4">Vision</h3> <p className="text-gray-600">To redefine industrial safety through autonomous crane technologies.</p> </div> </div>;
+const Certifications = () => <div className="p-24 flex gap-10"> <div className="w-32 h-44 border-4 border-gray-100 rounded-sm flex items-center justify-center text-gray-400 font-bold">ISO 9001</div> </div>;
+const Safety = () => <div className="p-24 bg-red-50 text-red-800 rounded-sm"> <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><HardHat /> Zero Accident Policy</h3> <p>Safety is not an option; it is our foundation.</p> </div>;
+const Contact = () => <div className="p-24 grid grid-cols-1 md:grid-cols-2 gap-10"> <div className="space-y-6"> <h2 className="text-3xl font-bold text-black">Get In Touch</h2> <div className="flex items-center gap-4 text-gray-600"><Phone /> +91 98765 43210</div> </div> </div>;
+const Careers = () => <div className="p-24 space-y-4"> <div className="p-8 bg-gray-50 flex justify-between items-center rounded-sm"> <div> <h4 className="font-bold text-black">Lead Structural Engineer</h4> <p className="text-xs text-gray-500 mt-1">Pune, India // Full Time</p> </div> <button className="text-black font-bold text-sm bg-white px-6 py-2 rounded-sm border border-black/10 hover:bg-gray-100">Apply Now</button> </div> </div>;
+const Blog = () => <div className="p-24 grid grid-cols-2 gap-10"> <div className="h-64 bg-gray-50 rounded-sm"></div> </div>;
+const FAQ = () => <div className="p-24 space-y-4 max-w-4xl mx-auto"> <details className="p-8 border-b border-black/10"><summary className="font-bold cursor-pointer text-black text-xl outline-none">What is the maintenance cycle for EOT cranes?</summary><p className="mt-4 text-gray-500 leading-relaxed">Quarterly inspections are recommended for heavy usage hubs.</p></details> </div>;
+const Services = () => <div className="p-24 grid grid-cols-2 md:grid-cols-4 gap-6"> {[1,2,3,4].map(i => <div key={i} className="p-8 bg-gray-50 rounded-sm h-48 hover:bg-black hover:text-white transition-all group"> <div className="w-10 h-10 rounded-full border border-black/10 group-hover:border-white/20 mb-4"></div> <p className="font-bold">Logistics Node {i}</p> </div>)} </div>;
+const EOTCrane = () => <div className="p-24"> <h2 className="text-6xl font-bold text-black tracking-tighter">EOT Cranes</h2> </div>;
+const SingleGirder = () => <div className="p-24 text-black font-medium text-2xl">Single Girder EOT Cranes</div>;
+const DoubleGirder = () => <div className="p-24 text-black font-medium text-2xl">Double Girder EOT Cranes</div>;
+const JibCrane = () => <div className="p-24 text-black font-medium text-2xl">Jib Cranes</div>;
+const GantryCrane = () => <div className="p-24 text-black font-medium text-2xl">Gantry Cranes</div>;
+const CraneInstall = () => <div className="p-24 text-black font-medium text-2xl">Installation Services</div>;
+const CraneMaintenance = () => <div className="p-24 text-black font-medium text-2xl">Maintenance Solutions</div>;
+const AMC = () => <div className="p-24 text-black font-medium text-2xl">AMC Plans</div>;
+const Modernization = () => <div className="p-24 text-black font-medium text-2xl">Modernization & Refurbishment</div>;
+const Breakdown = () => <div className="p-24 text-black font-medium text-2xl">Breakdown Support</div>;
+const RoofProfile = () => <div className="p-24 text-black font-medium text-2xl">Roofing & Shed Profiles</div>;
+const IndustrialAuto = () => <div className="p-24 text-black font-medium text-2xl">Industrial Automation</div>;
+const PLC = () => <div className="p-24 text-black font-medium text-2xl">PLC Programming & Logic</div>;
+const ControlPanels = () => <div className="p-24 text-black font-medium text-2xl">Electrical Control Panels</div>;
+const CustomEng = () => <div className="p-24 text-black font-medium text-2xl">Custom Engineering Solutions</div>;
+const RFQ = () => <div className="p-24 text-black font-medium text-2xl">Request For Quotation</div>;
+const CostEstimator = () => <div className="p-24 text-black font-medium text-2xl">Cost Estimator Tool</div>;
+const Consult = () => <div className="p-24 text-black font-medium text-2xl">Engineering Consultation</div>;
+const MyProjects = () => <div className="p-24 text-black font-medium text-2xl">My Active Projects</div>;
+const Documents = () => <div className="p-24 text-black font-medium text-2xl">Technical Documents</div>;
+const Invoices = () => <div className="p-24 text-black font-medium text-2xl">Financial Invoices</div>;
+const ServiceRequests = () => <div className="p-24 text-black font-medium text-2xl">Service Support Tickets</div>;
+const BookService = () => <div className="p-24 text-black font-medium text-2xl">Book a Technician</div>;
+const Emergency = () => <div className="bg-red-600 p-24 text-white text-center shadow-xl"><h1 className="text-5xl font-black mb-6 tracking-tighter uppercase">EMERGENCY RESPONSE</h1><p className="font-medium text-lg opacity-80">Call +91 999 999 9999 for immediate breakdown assistance.</p></div>;
+const AMCTracking = () => <div className="p-24 text-black font-medium text-2xl">Track your AMC Status</div>;
+const ServiceHistory = () => <div className="p-24 text-black font-medium text-2xl">Service Logs & Reports</div>;
+const CaseStudies = () => <div className="p-24"> <h2 className="text-6xl font-bold tracking-tighter mb-12">Case Studies</h2> <div className="grid grid-cols-1 md:grid-cols-2 gap-12 leading-relaxed text-gray-500"> <p>Explore how NSS-MW has redefined logistical flow for major Indian industrial nodes.</p> </div> </div>;
+const Gallery = () => <div className="p-24 text-black font-medium text-2xl">Image & Video Gallery</div>;
+const Testimonials = () => <div className="p-24 text-black font-medium text-2xl">Client Success Stories</div>;
+const Industries = () => <div className="p-24 text-black font-medium text-2xl">Industries We Serve</div>;
+const Privacy = () => <div className="p-24 text-black font-medium text-2xl">Privacy Policy</div>;
+const Terms = () => <div className="p-24 text-black font-medium text-2xl">Terms & Conditions</div>;
+const Cookie = () => <div className="p-24 text-black font-medium text-2xl">Cookie Policy</div>;
+const Sitemap = () => <div className="p-24 text-black font-medium text-2xl">Visual Sitemap</div>;
 
 // --- MAIN APP COMPONENT ---
 
@@ -490,12 +420,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Decoupled Public Routes rendering full screen */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        
-        {/* Dashboard Routes rendering within the Sidebar Layout */}
+        {/* Unified Layout with Top Navigation for ALL Public Pages */}
         <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="quote" element={<QuoteGenerator />} />
           <Route path="about" element={<About />} />
