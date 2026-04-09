@@ -30,7 +30,7 @@ export default function About() {
               Engineering Excellence Since <span className="text-primary dark:text-secondary">Day One</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Founded by Mr. R.K. Naidu, Naidu Solutions & Services has evolved from a specialized electrical repair unit into Nashik's premier manufacturer of heavy-duty EOT Cranes and intelligent Industrial Automation systems.
+              Founded by Mr. Chandrashekhar Laxmannaidu Ammisetty, Naidu Solutions & Services has evolved from a specialized electrical repair unit into Nashik's premier manufacturer of heavy-duty EOT Cranes and intelligent Industrial Automation systems.
             </p>
           </motion.div>
         </div>
