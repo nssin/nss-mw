@@ -1,31 +1,42 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 /* Tailwind v4 Migration:
-Defining theme variables within the @theme block
-allows @apply to recognize custom colors and utilities.
+  Defining theme variables within the @theme block
+  allows @apply to recognize custom colors and utilities.
 */
 @theme {
---color-primary: #1E40AF;
---color-secondary: #F59E0B;
---color-dark: #0F172A;
+  /* Retained core variables mapped to the new UI palette to prevent breaking existing classes */
+  --color-primary: #1A1A1A; /* Dark charcoal */
+  --color-secondary: #274D39; /* Dark green */
+  --color-dark: #121212;
+  
+  /* Specific UI Theme Colors based on reference design */
+  --color-uber-green: #274D39;
+  --color-uber-black: #1A1A1A;
+  --color-uber-light: #F6F6F6;
+
+  /* Set geometric font as the default sans */
+  --font-sans: 'Outfit', system-ui, sans-serif;
 }
 
 @layer base {
-body {
-/* bg-gray-50 is a standard utility, but defining the theme ensures discovery */
-@apply bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-300;
-}
+  body {
+    /* bg-[#F6F6F6] maps to the soft off-white background of the left panel */
+    @apply bg-uber-light text-uber-black font-sans transition-colors duration-300;
+  }
 }
 
 /* UI Enhancement: Custom Scrollbar for the 44+ Route Navigation */
 .custom-scrollbar::-webkit-scrollbar {
-width: 5px;
+  width: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-@apply bg-transparent;
+  @apply bg-transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-@apply bg-slate-700/50 rounded-full hover:bg-slate-600;
+  @apply bg-slate-700/50 rounded-full hover:bg-slate-600;
 }
+```
