@@ -6,15 +6,15 @@
   allows @apply to recognize custom colors and utilities.
 */
 @theme {
-  /* Industrial Color Palette (#2d2d2d Base) */
-  --color-primary: #c1ff72;       /* Industrial Lime Accent */
+  /* Industrial Color Palette (#2d2d2d Base with Blue Accents) */
+  --color-primary: #1e40af;       /* Bright Blue Accent */
+  --color-primary-light: #3b82f6; /* Lighter Blue for Gradients */
   --color-secondary: #ffffff;      /* Contrast White */
   --color-dark: #2d2d2d;          /* Main Background */
   
   /* Block-specific shades */
   --color-industrial-black: #1a1a1a;
   --color-industrial-gray: #3d3d3d;
-  --color-industrial-lime: #c1ff72;
   
   /* Geometric font mapping */
   --font-sans: 'Outfit', system-ui, sans-serif;
@@ -52,16 +52,21 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-industrial-black;
+  @apply bg-dark;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-industrial-lime/50 hover:bg-industrial-lime transition-colors;
+  @apply bg-primary/50 hover:bg-primary transition-colors;
 }
 
 /* Glassmorphism for Lidar Dashboard (Themed to #2d2d2d) */
 .glass-panel {
-  @apply bg-industrial-black/80 backdrop-blur-2xl border border-white/5 shadow-2xl;
+  @apply bg-dark/80 backdrop-blur-2xl border border-white/5 shadow-2xl;
+}
+
+/* Heigl-style Blue Gradient Hero Utility */
+.hero-blue-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
 }
 
 /* Industrial Utility Classes for Block Sections */
@@ -70,7 +75,7 @@
 }
 
 .industrial-button-primary {
-  @apply bg-industrial-lime text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-all;
+  @apply bg-primary text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-primary-light transition-all shadow-lg;
 }
 
 .industrial-button-outline {

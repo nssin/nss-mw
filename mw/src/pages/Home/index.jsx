@@ -1,21 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Search, 
-  PlayCircle, 
   ArrowRight, 
-  Globe, 
-  HardHat, 
-  Activity, 
-  ChevronRight,
+  Maximize, 
+  Truck, 
+  Hourglass, 
+  Download, 
   Hammer,
   Cpu,
   CheckCircle,
-  Factory,
-  Settings,
-  Wrench,
   Shield,
-  Zap
+  HardHat
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
@@ -36,125 +31,205 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col w-full animate-in fade-in duration-700 bg-white font-sans overflow-x-hidden">
+    <div className="flex flex-col w-full bg-dark text-white font-sans overflow-x-hidden">
       
-      {/* 1. HERO SECTION: MAP BACKGROUND STYLE */}
-      <section className="relative h-[85vh] w-full bg-[#244356] flex flex-col items-center justify-center px-6 overflow-hidden">
-        {/* Faux Map Background / Abstract Geo-Grid */}
-        <div className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#1a2b3c_100%)]"></div>
-          <div className="w-full h-full scale-150 transform -rotate-12 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-        </div>
-
-        <div className="relative z-10 w-full max-w-5xl text-center space-y-10">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-            <span className="inline-block py-1 px-4 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-100 text-[10px] font-bold uppercase tracking-[0.2em] mb-8">
+      {/* 1. HEIGL-STYLE HERO SECTION (Blue Gradient + 3D CSS Object) */}
+      <section className="relative min-h-[85vh] w-full hero-blue-gradient flex flex-col justify-end pt-32 overflow-hidden">
+        
+        {/* Main Hero Content */}
+        <div className="max-w-[1400px] w-full mx-auto px-6 lg:px-16 flex flex-col lg:flex-row items-center justify-between flex-1 pb-20 relative z-10">
+          
+          {/* Left: Typography & CTA */}
+          <motion.div 
+            initial="hidden" animate="visible" variants={fadeUp}
+            className="w-full lg:w-1/2 space-y-8 z-20"
+          >
+            <span className="inline-block py-1 px-4 rounded-full bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
               ISO 9001:2015 Certified Operations
             </span>
-            <h1 className="text-5xl lg:text-7xl font-bold text-white tracking-tighter leading-[1.05] mb-10">
-              Let's find smarter ways <br/> forward, together.
+            <h1 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[1.05] text-white">
+              INDUSTRIAL ENGINEERING <br /> & CRANE FABRICATION <br /> IN NANDED.
             </h1>
-            
-            {/* Large Center Search Bar */}
-            <div className="w-full max-w-2xl mx-auto bg-white shadow-2xl rounded-sm flex items-center p-1 group transition-all focus-within:ring-4 focus-within:ring-blue-500/20">
-               <div className="flex-1 flex items-center px-6 border-r border-gray-100">
-                  <Search className="text-gray-300 mr-4" size={20} />
-                  <input 
-                    type="text" 
-                    placeholder="Search for an engineering node..." 
-                    className="w-full py-5 text-lg outline-none text-black placeholder-gray-400"
-                  />
-               </div>
-               <button className="hidden md:block px-8 py-5 text-gray-400 font-medium hover:text-black">
-                 Near me
-               </button>
-            </div>
-
-            <div className="mt-10 flex items-center justify-center gap-4 text-white/70">
-              <PlayCircle size={28} className="text-white fill-white/20" />
-              <p className="text-sm font-medium tracking-wide">NSS-MW provides real-time telemetry data across all operation hubs.</p>
+            <p className="text-lg text-white/80 max-w-md font-medium leading-relaxed">
+              Specialized manufacturer of heavy-duty EOT cranes and contract manufacturer in structural mechanical engineering.
+            </p>
+            <div className="pt-4">
+              <Link to="/quote" className="inline-flex items-center gap-4 bg-white text-primary px-8 py-4 font-bold text-sm hover:bg-gray-100 transition-colors shadow-2xl">
+                Get a quote <ArrowRight size={18} />
+              </Link>
             </div>
           </motion.div>
+
+          {/* Right: CSS 3D Metal Tube Simulation (Mimicking HEIGL Object) */}
+          <motion.div 
+            initial={{ opacity: 0, x: 100 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-20 lg:mt-0 relative z-10 scale-75 lg:scale-100"
+          >
+            <div className="relative w-[450px] h-[180px] transform -rotate-12 skew-x-12 mt-10">
+              {/* Front Face */}
+              <div className="absolute inset-0 bg-[#e5e7eb] flex items-center pl-12 shadow-[20px_20px_50px_rgba(0,0,0,0.5)] border-b-[6px] border-[#d1d5db]">
+                <span className="text-[#9ca3af] font-black text-6xl tracking-[0.2em] opacity-50 select-none">NSS-MW</span>
+                <span className="absolute bottom-4 left-12 text-[#9ca3af] text-[10px] tracking-widest font-bold opacity-60">HEAVY ENGINEERING</span>
+              </div>
+              {/* Top Face */}
+              <div className="absolute top-[-60px] left-[30px] w-[450px] h-[60px] bg-[#f3f4f6] skew-x-[-45deg] origin-bottom-left border-b border-[#e5e7eb]"></div>
+              {/* Left Face (Hole) */}
+              <div className="absolute top-[-60px] left-0 w-[60px] h-[180px] bg-[#1a1a1a] skew-y-[-45deg] origin-top-left shadow-[inset_-10px_-10px_20px_rgba(0,0,0,0.8)] flex items-center justify-center">
+                 <div className="w-10 h-32 bg-[#000000] blur-[2px]"></div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Info Bar (Bottom of Hero) */}
+        <div className="w-full bg-[#1e3a8a]/60 backdrop-blur-md border-t border-white/20 flex flex-col md:flex-row relative z-20">
+          <div className="max-w-[1400px] w-full mx-auto px-6 lg:px-16 py-4 flex flex-wrap items-center justify-between gap-6">
+            
+            <div className="flex flex-wrap items-center gap-10">
+              <div className="flex items-center gap-3 text-white/90">
+                <div className="p-2 border border-white/20 border-dashed"><Maximize size={16} /></div>
+                <span className="text-xs font-bold tracking-wide">12,500 sq.ft Production area.</span>
+              </div>
+              <div className="flex items-center gap-3 text-white/90">
+                <div className="p-2 border border-white/20 border-dashed"><Truck size={16} /></div>
+                <span className="text-xs font-bold tracking-wide">Own transport fleet - for reliable delivery.</span>
+              </div>
+              <div className="flex items-center gap-3 text-white/90">
+                <div className="p-2 border border-white/20 border-dashed"><Hourglass size={16} /></div>
+                <span className="text-xs font-bold tracking-wide">In the market since 2005.</span>
+              </div>
+            </div>
+
+            <div className="bg-industrial-black/80 backdrop-blur-sm border border-white/10 p-4 -mt-12 md:-mt-16 relative z-30 max-w-xs shadow-2xl">
+              <p className="text-[10px] leading-relaxed text-white/80 font-bold mb-3">
+                The ISO 9001:2015 and OSHA certificates ensure compliance with high quality standards.
+              </p>
+              <a href="#" className="inline-flex items-center gap-2 text-xs font-bold text-white hover:text-primary-light transition-colors">
+                ISO 9001:2015 <Download size={14} />
+              </a>
+            </div>
+
+          </div>
         </div>
       </section>
 
-      {/* 2. ENGINEERING HIGHLIGHT: WHITE SECTION */}
-      <section className="bg-white py-32 px-6 lg:px-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-start mb-32">
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-            className="space-y-8"
-          >
-            <h2 className="text-6xl font-bold text-black tracking-tighter leading-none">NSS-MW <br/> Engineering</h2>
-            <p className="text-gray-600 text-xl leading-relaxed max-w-md font-medium">
-              We deliver end-to-end industrial solutions manufactured in Nashik, redefining heavy lifting and automation since 2005.
+      {/* 2. HEIGL-STYLE PROCESS INTRO */}
+      <section className="py-32 px-6 lg:px-16 bg-dark border-b border-white/5">
+        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between gap-16">
+          <div className="text-primary font-bold text-sm tracking-widest uppercase">
+            | Services
+          </div>
+          <div className="max-w-2xl space-y-6">
+            <h2 className="text-4xl lg:text-5xl font-black tracking-tighter leading-tight text-white">
+              We take over the complete process of heavy engineering.
+            </h2>
+            <p className="text-lg text-white/60 font-medium leading-relaxed">
+              From structural cutting and fabrication to advanced welding, mechanical processing, and final site installation of the nodes.
             </p>
-          </motion.div>
-          
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-            className="space-y-8 text-gray-500 text-base leading-loose"
-          >
-            <p>Operations are the backdrop of our workflow — they are complicated, ever-changing nodes. As NSS-MW has powered the movement of heavy assets from A to B, we’ve uncovered unique insights about how and why industrial projects scale safely.</p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/quote" className="bg-black text-white px-8 py-4 font-bold rounded-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 shadow-xl shadow-black/10">
-                Configure Your Crane <ArrowRight size={18} />
-              </Link>
-              <Link to="/services" className="border-2 border-black/10 text-black px-8 py-4 font-bold rounded-sm hover:bg-gray-50 transition-colors">
-                Explore Services
-              </Link>
-            </div>
-          </motion.div>
+          </div>
         </div>
+      </section>
 
-        {/* 3. CORE SERVICE NODES: 3-COLUMN ILLUSTRATED CARDS */}
-        <motion.div 
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16"
-        >
-          {[
-            { title: "EOT Crane Systems", color: "bg-[#274D39]", desc: "Heavy-duty Single and Double Girder systems with capacities up to 100 Tons.", icon: <Hammer size={40} className="text-white"/>, path: "/services/eot-crane" },
-            { title: "Industrial Automation", color: "bg-[#F59E0B]", desc: "Custom PLC programming (Siemens, AB) and VFD integration for precise control.", icon: <Cpu size={40} className="text-white"/>, path: "/industrialauto" },
-            { title: "AMC & Modernization", color: "bg-[#1E40AF]", desc: "Comprehensive contracts and legacy upgrades to meet modern safety standards.", icon: <Activity size={40} className="text-white"/>, path: "/services/amc" }
-          ].map((item, i) => (
-            <motion.div key={i} variants={fadeUp} className="group space-y-10">
-              <div className={cn("aspect-square w-full rounded-sm flex items-center justify-center transition-all duration-500 group-hover:scale-[0.98] shadow-lg", item.color)}>
-                 {item.icon}
-              </div>
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-black tracking-tight">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-                <Link to={item.path} className="inline-flex items-center gap-2 text-black font-bold border-b-2 border-black pb-1 hover:text-blue-600 hover:border-blue-600 transition-all text-xs uppercase tracking-widest">
-                  View Node Specs <ArrowRight size={14} />
+      {/* 3. HEIGL-STYLE SERVICE BLOCKS (Horizontal Rows) */}
+      <section className="bg-dark">
+        
+        {/* Service Row 1 */}
+        <div className="border-b border-white/5">
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-16 py-20 flex flex-col lg:flex-row gap-12 lg:gap-8">
+            <div className="w-full lg:w-[45%] flex gap-6">
+              <span className="text-sm font-bold text-white/30">#1</span>
+              <div className="space-y-6">
+                <h3 className="text-4xl font-black uppercase tracking-tighter text-white">EOT Cranes</h3>
+                <p className="text-white/60 leading-relaxed font-medium">
+                  The heart of NSS-MW operations is crane fabrication - here the ordered components are joined into stable constructions using different welding and assembly processes.
+                </p>
+                <Link to="/services/eot-crane" className="inline-flex items-center gap-3 bg-primary text-white px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-primary-light transition-colors">
+                  View all services <ArrowRight size={14} />
                 </Link>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
+            </div>
+            
+            <div className="w-full lg:w-[25%] flex items-center justify-center">
+              <div className="w-full aspect-square bg-[#3b82f6]/10 flex items-center justify-center border border-white/5 relative overflow-hidden">
+                 {/* Faux 3D Tool Icon */}
+                 <Hammer size={80} strokeWidth={1} className="text-primary drop-shadow-[0_10px_20px_rgba(30,64,175,0.5)] transform -rotate-12" />
+              </div>
+            </div>
+
+            <div className="w-full lg:w-[30%]">
+              <div className="bg-industrial-gray p-6 h-full border border-white/5">
+                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-6">Performance Facts</h4>
+                <ul className="space-y-3 text-xs font-bold text-white/80">
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> ISO 9001-certified processes</li>
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> Single & Double Girder systems</li>
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> Regular safety testing every 2 years</li>
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> Load capacities up to 150+ Tons</li>
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> Laser precision plate cutting</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Service Row 2 */}
+        <div className="border-b border-white/5">
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-16 py-20 flex flex-col lg:flex-row gap-12 lg:gap-8">
+            <div className="w-full lg:w-[45%] flex gap-6">
+              <span className="text-sm font-bold text-white/30">#2</span>
+              <div className="space-y-6">
+                <h3 className="text-4xl font-black uppercase tracking-tighter text-white">PLC Automation</h3>
+                <p className="text-white/60 leading-relaxed font-medium">
+                  Industrial Automation is our precise control procedure – using Computerized Numerical Control we manage complex nodes on multi-axis machinery for ultimate factory efficiency.
+                </p>
+                <Link to="/industrialauto" className="inline-flex items-center gap-3 bg-primary text-white px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-primary-light transition-colors">
+                  View all services <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+            
+            <div className="w-full lg:w-[25%] flex items-center justify-center">
+              <div className="w-full aspect-square bg-[#3b82f6]/10 flex items-center justify-center border border-white/5 relative overflow-hidden">
+                 <Cpu size={80} strokeWidth={1} className="text-primary drop-shadow-[0_10px_20px_rgba(30,64,175,0.5)] transform rotate-12" />
+              </div>
+            </div>
+
+            <div className="w-full lg:w-[30%]">
+              <div className="bg-industrial-gray p-6 h-full border border-white/5">
+                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-6">Performance Facts</h4>
+                <ul className="space-y-3 text-xs font-bold text-white/80">
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> High-precision PLC control</li>
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> Siemens & Allen-Bradley integration</li>
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> 3-, 4- and 5-axis control centers</li>
+                  <li className="flex items-center gap-3 bg-dark/50 p-3"><span className="w-1.5 h-1.5 bg-primary rounded-full"></span> VFD drive synchronization</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </section>
 
-      {/* 4. STAY CONNECTED: DARK UI DATA SECTION */}
-      <section className="bg-[#121212] py-32 px-6 lg:px-24 text-white">
-        <div className="max-w-7xl mx-auto space-y-16">
+      {/* 4. STAY CONNECTED / TELEMETRY SECTION */}
+      <section className="bg-dark py-32 px-6 lg:px-16 border-b border-white/5">
+        <div className="max-w-[1400px] mx-auto space-y-16">
            <motion.div 
              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-             className="flex flex-col md:flex-row justify-between items-end gap-8 border-b border-white/10 pb-16"
+             className="flex flex-col md:flex-row justify-between items-end gap-8 pb-10"
            >
               <div className="space-y-4">
-                <h2 className="text-5xl font-bold tracking-tight">Stay Connected</h2>
-                <p className="text-white/40 max-w-md font-medium text-lg leading-relaxed">Monitor system-wide agility, structural node health, and deployment status.</p>
+                <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-white">Live Node Telemetry</h2>
+                <p className="text-white/50 max-w-md font-medium text-lg leading-relaxed">Monitor system-wide agility, structural node health, and deployment status directly from our dashboard.</p>
               </div>
-              <Link to="/consult" className="bg-white text-black px-10 py-4 font-bold text-xs uppercase tracking-[0.2em] rounded-sm hover:bg-gray-200 transition-colors shadow-2xl">
-                Register New Node
+              <Link to="/dashboard" className="bg-primary text-white px-8 py-4 font-bold text-xs uppercase tracking-[0.2em] hover:bg-primary-light transition-colors shadow-xl">
+                Access Operations
               </Link>
            </motion.div>
 
            <motion.div 
              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-             className="overflow-x-auto"
+             className="overflow-x-auto border border-white/5 bg-industrial-gray p-8"
            >
              <table className="w-full text-left">
                <thead>
@@ -162,7 +237,6 @@ export default function Home() {
                    <th className="py-6 font-bold">Event Operator Node</th>
                    <th className="py-6 font-bold">Deployment Hub</th>
                    <th className="py-6 font-bold">Node Status</th>
-                   <th className="py-6 font-bold text-right">View Log</th>
                  </tr>
                </thead>
                <tbody className="text-sm text-white/70">
@@ -172,19 +246,14 @@ export default function Home() {
                    { node: "Node_882-KA", hub: "Bangalore Node", status: "ACTIVE" },
                    { node: "Node_431-MH", hub: "Pune Facility", status: "MAINTENANCE" }
                  ].map((row, i) => (
-                   <motion.tr key={i} variants={fadeUp} className="border-b border-white/5 hover:bg-white/5 transition-colors group cursor-pointer">
-                     <td className="py-8 font-bold text-white tracking-tight text-lg">{row.node}</td>
-                     <td className="py-8 text-white/50">{row.hub}</td>
-                     <td className="py-8">
+                   <motion.tr key={i} variants={fadeUp} className="border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
+                     <td className="py-6 font-bold text-white tracking-tight text-base">{row.node}</td>
+                     <td className="py-6 text-white/50">{row.hub}</td>
+                     <td className="py-6">
                        <span className={cn(
-                         "px-3 py-1 rounded-full text-[10px] font-bold tracking-widest",
-                         row.status === 'ACTIVE' ? 'bg-green-500/10 text-green-400' : 'bg-white/5 text-white/30'
+                         "px-3 py-1 rounded-sm text-[10px] font-bold tracking-widest",
+                         row.status === 'ACTIVE' ? 'bg-primary/20 text-primary-light' : 'bg-white/5 text-white/40'
                        )}>{row.status}</span>
-                     </td>
-                     <td className="py-8 text-right">
-                       <button className="text-white/20 group-hover:text-white transition-all transform group-hover:translate-x-1 inline-flex items-center gap-3 font-bold text-xs uppercase tracking-widest">
-                         Register View <ChevronRight size={16} />
-                       </button>
                      </td>
                    </motion.tr>
                  ))}
@@ -195,14 +264,14 @@ export default function Home() {
       </section>
 
       {/* 5. TRUST & SAFETY SECTION */}
-      <section className="bg-gray-50 py-32 px-6 lg:px-24">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-24">
+      <section className="bg-industrial-gray py-32 px-6 lg:px-16">
+        <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center gap-24">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
             className="w-full lg:w-1/2 space-y-10"
           >
-            <h2 className="text-5xl font-bold text-black tracking-tighter leading-tight">Unmatched Reliability. <br/> Certified Safety.</h2>
-            <p className="text-gray-500 text-lg leading-relaxed font-medium">
+            <h2 className="text-5xl font-black text-white tracking-tighter leading-tight">Unmatched Reliability. <br/> Certified Safety.</h2>
+            <p className="text-white/50 text-lg leading-relaxed font-medium">
               At NSS-MW, we do not compromise on structural integrity. Every unit is load-tested and certified before handover, ensuring zero downtime for your production line.
             </p>
             <div className="space-y-6">
@@ -211,9 +280,9 @@ export default function Home() {
                 "Genuine branded electricals (Schneider, L&T, Siemens).",
                 "Rapid Response Team mobilized within 4 hours for breakdowns."
               ].map((text, idx) => (
-                <div key={idx} className="flex items-center gap-4 text-black font-bold">
-                  <CheckCircle size={24} className="text-green-600 shrink-0" />
-                  <span className="tracking-tight">{text}</span>
+                <div key={idx} className="flex items-center gap-4 text-white font-bold">
+                  <CheckCircle size={24} className="text-primary shrink-0" />
+                  <span className="tracking-tight text-white/90">{text}</span>
                 </div>
               ))}
             </div>
@@ -221,14 +290,14 @@ export default function Home() {
 
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-            className="w-full lg:w-1/2 bg-[#1e40af] rounded-sm p-16 text-white shadow-2xl relative overflow-hidden"
+            className="w-full lg:w-1/2 bg-primary rounded-sm p-16 text-white shadow-2xl relative overflow-hidden"
           >
             <div className="absolute -right-20 -top-20 opacity-10">
               <Shield size={300} strokeWidth={1} />
             </div>
-            <h3 className="text-4xl font-bold mb-6 relative z-10 tracking-tight leading-tight">Need an immediate structural assessment?</h3>
-            <p className="mb-12 text-blue-100/70 relative z-10 text-lg font-medium leading-relaxed">Our engineering team provides free on-site consultation and load calculations to recommend the exact specifications for your hub.</p>
-            <Link to="/consult" className="inline-flex items-center bg-white text-black px-10 py-5 font-bold hover:bg-gray-100 transition-all relative z-10 shadow-xl text-xs uppercase tracking-widest">
+            <h3 className="text-4xl font-black mb-6 relative z-10 tracking-tighter leading-tight">Need an immediate structural assessment?</h3>
+            <p className="mb-12 text-white/80 relative z-10 text-lg font-medium leading-relaxed">Our engineering team provides free on-site consultation and load calculations to recommend the exact specifications for your hub.</p>
+            <Link to="/consult" className="inline-flex items-center bg-white text-dark px-10 py-5 font-black hover:bg-gray-100 transition-all relative z-10 shadow-xl text-xs uppercase tracking-widest">
               Book Consultation <HardHat className="ml-3 w-5 h-5" />
             </Link>
           </motion.div>

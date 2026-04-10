@@ -1,190 +1,205 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Search, 
-  Settings, 
-  Shield, 
-  Zap, 
-  Wrench, 
-  Cpu, 
-  FileText, 
   ArrowRight, 
-  Construction, 
+  Hammer, 
+  Cpu, 
   Activity, 
-  Maximize, 
-  Factory,
-  Layers
+  Truck
 } from 'lucide-react';
-
-/**
- * All Engineering Services Component
- * Features: Real-time search indexing, Category-based filtering, 
- * Hover-state animations, and comprehensive service mapping.
- */
-
-const categories = [
-  { id: 'all', label: 'All Services' },
-  { id: 'cranes', label: 'Crane Solutions' },
-  { id: 'maintenance', label: 'Maintenance & AMC' },
-  { id: 'automation', label: 'Industrial Automation' },
-  { id: 'consulting', label: 'Tools & Consulting' },
-];
-
-const serviceList = [
-  // Crane Solutions
-  { id: 'eotcrane', title: 'EOT Cranes', category: 'cranes', icon: Construction, desc: 'Heavy-duty Overhead Travelling Cranes for high-capacity material handling.' },
-  { id: 'singlegirder', title: 'Single Girder Cranes', category: 'cranes', icon: Layers, desc: 'Cost-effective lifting solutions for light to medium industrial applications.' },
-  { id: 'doublegirder', title: 'Double Girder Cranes', category: 'cranes', icon: Maximize, desc: 'Robust lifting for heavy loads with maximum height and span.' },
-  { id: 'jibcrane', title: 'Jib Cranes', category: 'cranes', icon: RotateCw, desc: 'Localized lifting solutions for workstations and assembly lines.' },
-  { id: 'gantrycrane', title: 'Gantry Cranes', category: 'cranes', icon: Factory, desc: 'Self-supported outdoor and indoor portal crane systems.' },
-  { id: 'craneinstall', title: 'Crane Installation', category: 'cranes', icon: Settings, desc: 'Professional site erection and structural alignment services.' },
-  
-  // Maintenance
-  { id: 'cranemaintenance', title: 'General Maintenance', category: 'maintenance', icon: Wrench, desc: 'Preventive health checks and lubrication cycles for crane longevity.' },
-  { id: 'amc', title: 'Annual Maintenance (AMC)', category: 'maintenance', icon: Shield, desc: 'Comprehensive yearly contracts for 100% operational uptime.' },
-  { id: 'modernization', title: 'Crane Modernization', category: 'maintenance', icon: Zap, desc: 'Upgrading legacy systems with VFDs and wireless controls.' },
-  { id: 'breakdown', title: 'Breakdown Repair', category: 'maintenance', icon: Activity, desc: '24/7 emergency response for critical industrial repairs.' },
-  { id: 'amctracking', title: 'AMC Status Tracking', category: 'maintenance', icon: FileText, desc: 'Digital logs for service history and upcoming schedules.' },
-  { id: 'servicehistory', title: 'Service History', category: 'maintenance', icon: Clock, desc: 'Access archived maintenance reports and safety certificates.' },
-
-  // Automation
-  { id: 'industrialauto', title: 'Industrial Automation', category: 'automation', icon: Cpu, desc: 'End-to-end automation for manufacturing lines and material flow.' },
-  { id: 'plc', title: 'PLC Programming', category: 'automation', icon: Settings, desc: 'Logic control systems for Siemens, Rockwell, and Schneider systems.' },
-  { id: 'controlpanels', title: 'Custom Control Panels', category: 'automation', icon: Zap, desc: 'Fabrication of VFD, APFC, and custom PLC control panels.' },
-  { id: 'roofprofile', title: 'Roof Profile Machines', category: 'automation', icon: Factory, desc: 'Automation for roofing and trapezoidal profiling equipment.' },
-  
-  // Consulting & Tools
-  { id: 'rfq', title: 'Request Quote (RFQ)', category: 'consulting', icon: FileText, desc: 'Detailed technical specification submission for project bids.' },
-  { id: 'costestimator', title: 'Cost Estimator', category: 'consulting', icon: Activity, desc: 'Real-time pricing estimation based on crane capacity and span.' },
-  { id: 'consult', title: 'Engineering Consult', category: 'consulting', icon: Shield, desc: 'Expert site visits and feasibility studies for new installations.' },
-];
-
-// Fallback icons for dynamic list
-function RotateCw(props) { return <Settings {...props} className={props.className + " rotate-90"} />; }
-function Clock(props) { return <Activity {...props} />; }
+import { motion } from 'framer-motion';
+import { cn } from '../../lib/utils';
 
 export default function Services() {
-  const [activeTab, setActiveTab] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  // Animation Variants
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  };
 
-  const filteredServices = useMemo(() => {
-    return serviceList.filter(service => {
-      const matchesTab = activeTab === 'all' || service.category === activeTab;
-      const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           service.desc.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesTab && matchesSearch;
-    });
-  }, [activeTab, searchQuery]);
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 }
+    }
+  };
+
+  // Real NSS-MW Service Data structured for the Heigl-style layout
+  const services = [
+    {
+      id: '1',
+      title: 'EOT CRANES',
+      path: '/services/eot-crane',
+      description: 'The heart of NSS-MW operations is heavy-duty crane fabrication. Here, ordered structural components are joined into highly stable constructions using advanced submerged arc welding and precise assembly processes.',
+      icon: Hammer,
+      facts: [
+        'ISO 9001-certified fabrication processes',
+        'Single & Double Girder systems available',
+        'Load capacities spanning 5 to 150+ Tons',
+        'Laser precision plate cutting integration',
+        'Custom span engineering up to 35 meters'
+      ]
+    },
+    {
+      id: '2',
+      title: 'PLC AUTOMATION',
+      path: '/industrialauto',
+      description: 'Industrial Automation is our precise control procedure. Using Computerized Numerical Control (CNC) and advanced logic programming, we manage complex operational nodes for ultimate factory efficiency and safety.',
+      icon: Cpu,
+      facts: [
+        'High-precision PLC & SCADA control',
+        'Siemens, Allen-Bradley, & Schneider systems',
+        'Custom APFC and VFD drive synchronization',
+        'Automated material flow architecture',
+        'Fail-safe autonomous limit sensing'
+      ]
+    },
+    {
+      id: '3',
+      title: 'MAINTENANCE & AMC',
+      path: '/services/amc',
+      description: 'Comprehensive Annual Maintenance Contracts and legacy equipment upgrades to meet modern safety standards. We ensure your production lines never experience unexpected mechanical downtime.',
+      icon: Activity,
+      facts: [
+        '24/7 Breakdown & Emergency Response',
+        'Preventive health checks & lubrication cycles',
+        'Digital AMC tracking & service history logs',
+        'Legacy crane VFD & radio control modernization',
+        'OSHA compliant safety certifications'
+      ]
+    },
+    {
+      id: '4',
+      title: 'SITE INSTALLATION',
+      path: '/craneinstall',
+      description: 'Expert erection and commissioning services. Our certified rapid-response teams manage the entire deployment lifecycle, from initial site structural survey to final load testing and handover.',
+      icon: Truck,
+      facts: [
+        'Certified structural alignment protocols',
+        'In-house heavy transport & logistics fleet',
+        'On-site load testing up to 125% SWL',
+        'Turnkey commissioning across 700+ global hubs',
+        'Strict adherence to industrial safety matrix'
+      ]
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 pb-20">
-      {/* Hero Header */}
-      <div className="bg-primary dark:bg-blue-900 text-white py-16 px-4 mb-12 shadow-inner">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter">
-            Engineering Excellence Catalog
-          </h1>
-          <p className="text-xl text-blue-100 max-w-2xl opacity-90">
-            Precision-engineered crane solutions, automation architecture, and 24/7 maintenance services for the 2026 industrial landscape.
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Controls: Filter & Search */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-12 items-center justify-between">
-          <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveTab(cat.id)}
-                className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
-                  activeTab === cat.id 
-                  ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105' 
-                  : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+    <div className="flex flex-col w-full bg-dark text-white font-sans overflow-x-hidden pt-28">
+      
+      {/* 1. HEIGL-STYLE PAGE HEADER */}
+      <section className="py-24 px-6 lg:px-16 border-b border-white/5">
+        <motion.div 
+          initial="hidden" animate="visible" variants={fadeUp}
+          className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between gap-16"
+        >
+          <div className="text-primary font-bold text-sm tracking-widest uppercase shrink-0">
+            | Services
           </div>
-
-          <div className="relative w-full lg:w-96 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={20} />
-            <input 
-              type="text" 
-              placeholder="Search services..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all text-gray-900 dark:text-white shadow-sm"
-            />
+          <div className="max-w-3xl space-y-8">
+            <h1 className="text-5xl lg:text-6xl font-black tracking-tighter leading-[1.1] text-white">
+              We take over the complete process of heavy engineering.
+            </h1>
+            <p className="text-xl text-white/60 font-medium leading-relaxed">
+              From structural cutting and fabrication to advanced PLC automation, mechanical processing, and final site installation of the industrial nodes.
+            </p>
           </div>
-        </div>
+        </motion.div>
+      </section>
 
-        {/* Results Count */}
-        <p className="mb-8 text-sm text-gray-500 dark:text-gray-400 font-medium">
-          Showing {filteredServices.length} of {serviceList.length} Engineering Modules
-        </p>
-
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
-            <Link 
-              to={`/services/${service.id}`} 
-              key={service.id}
-              className="group bg-white dark:bg-gray-800 p-8 rounded-3xl border border-gray-100 dark:border-gray-700 hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5 transform hover:-translate-y-2 relative overflow-hidden flex flex-col h-full"
+      {/* 2. HEIGL-STYLE SERVICE BLOCKS (Horizontal Rows) */}
+      <section className="bg-dark">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {services.map((service) => (
+            <motion.div 
+              key={service.id} 
+              variants={fadeUp}
+              className="border-b border-white/5 relative group"
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <service.icon size={80} />
-              </div>
-
-              <div className="mb-6 w-14 h-14 bg-gray-50 dark:bg-gray-900 rounded-2xl flex items-center justify-center text-primary dark:text-blue-400 group-hover:bg-primary group-hover:text-white transition-all shadow-inner">
-                <service.icon size={28} />
-              </div>
-
-              <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">
-                {service.title}
-              </h3>
+              {/* Highlight bar on hover */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
               
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
-                {service.desc}
-              </p>
+              <div className="max-w-[1400px] mx-auto px-6 lg:px-16 py-24 flex flex-col lg:flex-row gap-12 lg:gap-16">
+                
+                {/* Left Column: Number & Description */}
+                <div className="w-full lg:w-[45%] flex gap-6 lg:gap-8">
+                  <span className="text-sm font-bold text-white/30 pt-2 shrink-0">#{service.id}</span>
+                  <div className="space-y-8">
+                    <h2 className="text-4xl lg:text-5xl font-black uppercase tracking-tighter text-white">{service.title}</h2>
+                    <p className="text-white/60 text-lg leading-relaxed font-medium">
+                      {service.description}
+                    </p>
+                    <Link to={service.path} className="inline-flex items-center gap-3 text-primary font-bold text-sm hover:text-primary-light transition-colors">
+                      View all specifications <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                </div>
+                
+                {/* Middle Column: Faux 3D Image Card */}
+                <div className="w-full lg:w-[25%] flex items-center justify-center">
+                  <div className="w-full aspect-square bg-[#3b82f6]/10 flex items-center justify-center border border-white/5 relative overflow-hidden group-hover:bg-[#3b82f6]/20 transition-colors duration-500">
+                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent"></div>
+                     {/* Faux 3D Tool Icon */}
+                     <service.icon 
+                        size={100} 
+                        strokeWidth={0.8} 
+                        className="text-primary drop-shadow-[0_20px_30px_rgba(30,64,175,0.6)] transform -rotate-12 group-hover:rotate-0 transition-transform duration-700 relative z-10" 
+                     />
+                  </div>
+                </div>
 
-              <div className="flex items-center text-primary dark:text-blue-400 font-bold text-sm uppercase tracking-wider group-hover:translate-x-2 transition-transform">
-                Explore Solution <ArrowRight className="ml-2" size={16} />
+                {/* Right Column: Performance Facts */}
+                <div className="w-full lg:w-[30%]">
+                  <div className="bg-industrial-gray p-8 h-full border border-white/5 shadow-2xl">
+                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-8">Performance Facts</h3>
+                    <ul className="space-y-3">
+                      {service.facts.map((fact, idx) => (
+                        <li key={idx} className="flex items-center gap-4 bg-dark/60 p-4 border border-white/5 group-hover:border-white/10 transition-colors">
+                          <span className="w-1.5 h-1.5 bg-primary rounded-full shrink-0 shadow-[0_0_8px_#1e40af]"></span> 
+                          <span className="text-xs font-bold text-white/80 leading-relaxed">{fact}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
               </div>
-            </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
+      </section>
 
-        {/* Empty State */}
-        {filteredServices.length === 0 && (
-          <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-700">
-            <Search className="mx-auto text-gray-300 dark:text-gray-600 mb-4" size={48} />
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">No engineering modules found</h3>
-            <p className="text-gray-500 dark:text-gray-400">Try adjusting your filters or search keywords.</p>
+      {/* 3. CALL TO ACTION FOOTER BANNER */}
+      <section className="hero-blue-gradient py-32 px-6 lg:px-16 border-b border-white/10">
+        <motion.div 
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+          className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-12"
+        >
+          <div className="space-y-6 max-w-2xl">
+            <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tighter leading-tight">
+              Ready to configure your heavy engineering node?
+            </h2>
+            <p className="text-blue-100 text-lg font-medium leading-relaxed">
+              Our technical team is available 24/7 to provide load calculations, site feasibility studies, and custom automation architecture.
+            </p>
           </div>
-        )}
-
-        {/* Quick Actions Footer */}
-        <div className="mt-16 bg-gray-900 dark:bg-primary p-12 rounded-[2rem] shadow-2xl relative overflow-hidden">
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-center md:text-left">
-              <h2 className="text-3xl font-bold text-white mb-2">Can't find a specific configuration?</h2>
-              <p className="text-blue-100 opacity-80">Our engineering team designs bespoke solutions for unique industrial requirements.</p>
-            </div>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link to="/quote" className="bg-white text-gray-900 px-8 py-4 rounded-2xl font-black hover:bg-gray-100 transition-all shadow-xl hover:scale-105 active:scale-95">
-                Request Custom Quote
-              </Link>
-              <Link to="/contact" className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-2xl font-black hover:bg-white/20 transition-all backdrop-blur-sm">
-                Technical Support
-              </Link>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+            <Link to="/quote" className="industrial-button-primary bg-white text-primary hover:bg-gray-100 shadow-2xl text-center">
+              Request Quote
+            </Link>
+            <Link to="/contact" className="industrial-button-outline text-center">
+              Contact Engineering
+            </Link>
           </div>
-          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-        </div>
-      </div>
+        </motion.div>
+      </section>
+      
     </div>
   );
 }

@@ -8,15 +8,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Core Industrial Palette strictly based on design specs */
-        primary: '#c1ff72',       /* Industrial Lime Accent */
-        secondary: '#ffffff',      /* Pure White Text/Highlights */
-        dark: '#2d2d2d',          /* Global Background Base */
+        /* Core Industrial Palette strictly based on HEIGL design specs */
+        primary: '#1e40af',           /* Bright Blue Accent */
+        'primary-light': '#3b82f6',   /* Lighter Blue for Gradients */
+        secondary: '#ffffff',         /* Pure White Text/Highlights */
+        dark: '#2d2d2d',              /* Global Background Base */
         
         /* Modular Block Colors */
         'industrial-black': '#1a1a1a', /* Navigation and Footer blocks */
         'industrial-gray': '#3d3d3d',  /* Section contrast blocks */
-        'industrial-lime': '#c1ff72',  /* Action-oriented accent */
       },
       fontFamily: {
         /* Geometric 'Outfit' font for a modern manufacturing aesthetic */
